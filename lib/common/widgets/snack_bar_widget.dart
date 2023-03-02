@@ -10,15 +10,16 @@ class SnackbarWidget extends StatelessWidget {
     required this.title,
     required this.message,
     this.error = false,
-    this.textColor = ColorTheme.white,
+    this.textColor,
   });
 
   final String title;
   final String message;
   final bool error;
-  final Color textColor;
+  final Color? textColor;
 
-  Color get bgColor => error ? ColorTheme.fabRedBackground : ColorTheme.primary;
+  Color bgColor(BuildContext context) =>
+      error ? context.colorScheme.error : context.colorScheme.primary;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class SnackbarWidget extends StatelessWidget {
           Container(
             width: 10.w,
             decoration: BoxDecoration(
-              color: bgColor,
+              color: bgColor(context),
               borderRadius: BorderRadius.horizontal(left: 10.circular),
             ),
           ),
