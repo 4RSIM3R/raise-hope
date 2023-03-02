@@ -1,8 +1,7 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:next_starter/common/widgets/loading_indicator_widget.dart';
-import 'package:next_starter/common/widgets/snack_bar_widget.dart';
-import 'package:next_starter/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:next_starter/common/widgets/snack_bar_widget.dart';
 import 'num_extension.dart';
 
 extension BuildContextX on BuildContext {
@@ -56,13 +55,15 @@ extension BuildContextX on BuildContext {
             title: title,
             message: message,
             error: error,
-            textColor: ColorTheme.statusRed,
+            textColor: colorScheme.error,
           ),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: 10.rounded,
           ),
-          backgroundColor: error ? ColorTheme.statusLightRed : ColorTheme.brandBackgroundLight,
+          backgroundColor: error
+              ? colorScheme.error
+              : colorScheme.background.withOpacity(0.8),
           padding: EdgeInsets.zero,
           elevation: 0,
           duration: const Duration(seconds: 3),
@@ -105,7 +106,9 @@ extension BuildContextX on BuildContext {
           shape: RoundedRectangleBorder(
             borderRadius: 10.rounded,
           ),
-          backgroundColor: error ? ColorTheme.statusLightRed : ColorTheme.brandBackgroundLight,
+          backgroundColor: error
+              ? colorScheme.error
+              : colorScheme.background.withOpacity(0.8),
           padding: EdgeInsets.zero,
           elevation: 0,
           duration: const Duration(seconds: 3),

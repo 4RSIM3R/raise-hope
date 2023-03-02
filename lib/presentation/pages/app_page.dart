@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:next_starter/injection.dart';
-import 'package:next_starter/presentation/pages/home/home_page.dart';
 import 'package:next_starter/presentation/routes/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:next_starter/presentation/theme/theme.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
@@ -17,14 +17,14 @@ class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Starter',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      title: 'Rise Hope',
+      theme: AppStyles.lightTheme,
+      darkTheme: AppStyles.darkTheme,
+      themeMode: ThemeMode.light,
       routeInformationParser: _appRouter.defaultRouteParser(),
       routerDelegate: _appRouter.delegate(
         navigatorObservers: () => [
-           MyObserver(),
+          MyObserver(),
         ],
       ),
     );

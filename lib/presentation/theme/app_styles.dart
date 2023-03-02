@@ -1,6 +1,19 @@
 part of 'theme.dart';
 
 abstract class AppStyles {
+  static ThemeData get lightTheme => ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorSchemes.lightColorScheme,
+        scaffoldBackgroundColor: ColorSchemes.lightColorScheme.background,
+      );
+
+  static ThemeData get darkTheme => ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorSchemes.darkColorScheme,
+        scaffoldBackgroundColor: ColorSchemes.darkColorScheme.background,
+      );
+
+  // avoid using this as much as possible, stick to default styles
   // text 9px
   //regular
   static TextStyle text9Px = GoogleFonts.roboto(
