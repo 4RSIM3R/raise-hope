@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:loop_page_view/loop_page_view.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
+import 'package:next_starter/injection.dart';
 import 'package:next_starter/presentation/hooks/loop_page_controller.dart';
+import 'package:next_starter/presentation/routes/app_router.dart';
 
 class OnboardingData {
   final String title;
@@ -135,7 +137,9 @@ class OnboardingPage extends HookWidget {
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      locator<AppRouter>().replace(RegisterRoute());
+                    },
                     child: const Text("Join as Volunteer"),
                   ),
                 ),

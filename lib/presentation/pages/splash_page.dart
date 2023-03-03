@@ -19,7 +19,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> init() async {
     await 3.delayedSeconds;
-    locator<AppRouter>().replace(const OnboardingRoute());
+    locator<AppRouter>().replace(OnboardingRoute());
   }
 
   @override

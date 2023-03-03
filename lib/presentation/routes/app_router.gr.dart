@@ -24,9 +24,19 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     OnboardingRoute.name: (routeData) {
+      final args = routeData.argsAs<OnboardingRouteArgs>(
+          orElse: () => const OnboardingRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const OnboardingPage(),
+        child: OnboardingPage(key: args.key),
+      );
+    },
+    RegisterRoute.name: (routeData) {
+      final args = routeData.argsAs<RegisterRouteArgs>(
+          orElse: () => const RegisterRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: RegisterPage(key: args.key),
       );
     },
     HomeRoute.name: (routeData) {
@@ -46,6 +56,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           OnboardingRoute.name,
           path: '/onboarding-page',
+        ),
+        RouteConfig(
+          RegisterRoute.name,
+          path: '/register-page',
         ),
         RouteConfig(
           HomeRoute.name,
@@ -68,14 +82,50 @@ class SplashRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [OnboardingPage]
-class OnboardingRoute extends PageRouteInfo<void> {
-  const OnboardingRoute()
+class OnboardingRoute extends PageRouteInfo<OnboardingRouteArgs> {
+  OnboardingRoute({Key? key})
       : super(
           OnboardingRoute.name,
           path: '/onboarding-page',
+          args: OnboardingRouteArgs(key: key),
         );
 
   static const String name = 'OnboardingRoute';
+}
+
+class OnboardingRouteArgs {
+  const OnboardingRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'OnboardingRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [RegisterPage]
+class RegisterRoute extends PageRouteInfo<RegisterRouteArgs> {
+  RegisterRoute({Key? key})
+      : super(
+          RegisterRoute.name,
+          path: '/register-page',
+          args: RegisterRouteArgs(key: key),
+        );
+
+  static const String name = 'RegisterRoute';
+}
+
+class RegisterRouteArgs {
+  const RegisterRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'RegisterRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
