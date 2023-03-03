@@ -19,7 +19,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> init() async {
     await 3.delayedSeconds;
-    locator<AppRouter>().replace(const HomeRoute());
+    locator<AppRouter>().replace(const OnboardingRoute());
   }
 
   @override
@@ -29,13 +29,11 @@ class _SplashPageState extends State<SplashPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 150,
+            Image.asset(
+              'assets/images/logo.png',
               width: 150,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(10),
-              ),
+              height: 150,
+              fit: BoxFit.contain,
             )
           ],
         ),
