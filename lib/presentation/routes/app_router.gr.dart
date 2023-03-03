@@ -23,6 +23,12 @@ class _$AppRouter extends RootStackRouter {
         child: const SplashPage(),
       );
     },
+    OnboardingRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const OnboardingPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -36,6 +42,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           SplashRoute.name,
           path: '/',
+        ),
+        RouteConfig(
+          OnboardingRoute.name,
+          path: '/onboarding-page',
         ),
         RouteConfig(
           HomeRoute.name,
@@ -54,6 +64,18 @@ class SplashRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
+}
+
+/// generated route for
+/// [OnboardingPage]
+class OnboardingRoute extends PageRouteInfo<void> {
+  const OnboardingRoute()
+      : super(
+          OnboardingRoute.name,
+          path: '/onboarding-page',
+        );
+
+  static const String name = 'OnboardingRoute';
 }
 
 /// generated route for

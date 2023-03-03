@@ -1,19 +1,25 @@
 part of 'theme.dart';
 
 abstract class AppStyles {
-  static ThemeData get lightTheme => ThemeData(
+  static ThemeData get _baseTheme => ThemeData(
         useMaterial3: true,
+        elevatedButtonTheme: ButtonTheme.elevated,
+        outlinedButtonTheme: ButtonTheme.outlined,
+        textButtonTheme: ButtonTheme.text,
+        filledButtonTheme: ButtonTheme.filled,
+      );
+
+  static ThemeData get lightTheme => _baseTheme.copyWith(
         colorScheme: ColorSchemes.lightColorScheme,
         scaffoldBackgroundColor: ColorSchemes.lightColorScheme.background,
       );
 
-  static ThemeData get darkTheme => ThemeData(
-        useMaterial3: true,
+  static ThemeData get darkTheme => _baseTheme.copyWith(
         colorScheme: ColorSchemes.darkColorScheme,
         scaffoldBackgroundColor: ColorSchemes.darkColorScheme.background,
       );
 
-  // avoid using this as much as possible, stick to default styles
+  // avoid using this as much as possible, stick to default m3 styles
   // text 9px
   //regular
   static TextStyle text9Px = GoogleFonts.roboto(
