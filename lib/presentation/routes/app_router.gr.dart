@@ -29,10 +29,28 @@ class _$AppRouter extends RootStackRouter {
         child: const OnboardingPage(),
       );
     },
+    RegisterRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const RegisterPage(),
+      );
+    },
+    RegisterMultiStepRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const RegisterMultiStepPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const HomePage(),
+      );
+    },
+    LoginRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const LoginPage(),
       );
     },
   };
@@ -48,8 +66,20 @@ class _$AppRouter extends RootStackRouter {
           path: '/onboarding-page',
         ),
         RouteConfig(
+          RegisterRoute.name,
+          path: '/register-page',
+        ),
+        RouteConfig(
+          RegisterMultiStepRoute.name,
+          path: '/register-multi-step-page',
+        ),
+        RouteConfig(
           HomeRoute.name,
           path: '/home-page',
+        ),
+        RouteConfig(
+          LoginRoute.name,
+          path: '/login-page',
         ),
       ];
 }
@@ -79,6 +109,30 @@ class OnboardingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RegisterPage]
+class RegisterRoute extends PageRouteInfo<void> {
+  const RegisterRoute()
+      : super(
+          RegisterRoute.name,
+          path: '/register-page',
+        );
+
+  static const String name = 'RegisterRoute';
+}
+
+/// generated route for
+/// [RegisterMultiStepPage]
+class RegisterMultiStepRoute extends PageRouteInfo<void> {
+  const RegisterMultiStepRoute()
+      : super(
+          RegisterMultiStepRoute.name,
+          path: '/register-multi-step-page',
+        );
+
+  static const String name = 'RegisterMultiStepRoute';
+}
+
+/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute()
@@ -88,4 +142,16 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+}
+
+/// generated route for
+/// [LoginPage]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute()
+      : super(
+          LoginRoute.name,
+          path: '/login-page',
+        );
+
+  static const String name = 'LoginRoute';
 }
