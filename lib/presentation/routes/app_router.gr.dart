@@ -35,6 +35,12 @@ class _$AppRouter extends RootStackRouter {
         child: const RegisterPage(),
       );
     },
+    RegisterMultiStepRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const RegisterMultiStepPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -62,6 +68,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           RegisterRoute.name,
           path: '/register-page',
+        ),
+        RouteConfig(
+          RegisterMultiStepRoute.name,
+          path: '/register-multi-step-page',
         ),
         RouteConfig(
           HomeRoute.name,
@@ -108,6 +118,18 @@ class RegisterRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'RegisterRoute';
+}
+
+/// generated route for
+/// [RegisterMultiStepPage]
+class RegisterMultiStepRoute extends PageRouteInfo<void> {
+  const RegisterMultiStepRoute()
+      : super(
+          RegisterMultiStepRoute.name,
+          path: '/register-multi-step-page',
+        );
+
+  static const String name = 'RegisterMultiStepRoute';
 }
 
 /// generated route for

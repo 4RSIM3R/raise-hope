@@ -16,9 +16,6 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _form = FormGroup({
-    'fullName': FormControl<String>(validators: [
-      Validators.required,
-    ]),
     'email': FormControl<String>(validators: [
       Validators.required,
       Validators.email,
@@ -71,16 +68,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
                         children: [
-                          ReactiveTextField(
-                            formControlName: "fullName",
-                            decoration: FormTheme.outlinedInput.copyWith(
-                              labelText: "Full Name",
-                            ),
-                            validationMessages: {
-                              'required': (error) => "Full Name can't be empty!"
-                            },
-                          ),
-                          24.verticalSpace,
                           ReactiveTextField(
                             formControlName: "email",
                             decoration: FormTheme.outlinedInput.copyWith(
@@ -156,7 +143,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(
                     width: 280,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        locator<AppRouter>().push(const RegisterMultiStepRoute());
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                           context.colorScheme.primary,
