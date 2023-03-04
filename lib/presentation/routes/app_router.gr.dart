@@ -24,25 +24,27 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     OnboardingRoute.name: (routeData) {
-      final args = routeData.argsAs<OnboardingRouteArgs>(
-          orElse: () => const OnboardingRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: OnboardingPage(key: args.key),
+        child: const OnboardingPage(),
       );
     },
     RegisterRoute.name: (routeData) {
-      final args = routeData.argsAs<RegisterRouteArgs>(
-          orElse: () => const RegisterRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: RegisterPage(key: args.key),
+        child: const RegisterPage(),
       );
     },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const HomePage(),
+      );
+    },
+    LoginRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const LoginPage(),
       );
     },
   };
@@ -65,6 +67,10 @@ class _$AppRouter extends RootStackRouter {
           HomeRoute.name,
           path: '/home-page',
         ),
+        RouteConfig(
+          LoginRoute.name,
+          path: '/login-page',
+        ),
       ];
 }
 
@@ -82,50 +88,26 @@ class SplashRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [OnboardingPage]
-class OnboardingRoute extends PageRouteInfo<OnboardingRouteArgs> {
-  OnboardingRoute({Key? key})
+class OnboardingRoute extends PageRouteInfo<void> {
+  const OnboardingRoute()
       : super(
           OnboardingRoute.name,
           path: '/onboarding-page',
-          args: OnboardingRouteArgs(key: key),
         );
 
   static const String name = 'OnboardingRoute';
 }
 
-class OnboardingRouteArgs {
-  const OnboardingRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'OnboardingRouteArgs{key: $key}';
-  }
-}
-
 /// generated route for
 /// [RegisterPage]
-class RegisterRoute extends PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({Key? key})
+class RegisterRoute extends PageRouteInfo<void> {
+  const RegisterRoute()
       : super(
           RegisterRoute.name,
           path: '/register-page',
-          args: RegisterRouteArgs(key: key),
         );
 
   static const String name = 'RegisterRoute';
-}
-
-class RegisterRouteArgs {
-  const RegisterRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'RegisterRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for
@@ -138,4 +120,16 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+}
+
+/// generated route for
+/// [LoginPage]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute()
+      : super(
+          LoginRoute.name,
+          path: '/login-page',
+        );
+
+  static const String name = 'LoginRoute';
 }

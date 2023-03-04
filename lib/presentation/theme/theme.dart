@@ -7,3 +7,4 @@ part 'app_styles.dart';
 part 'generate_theme.dart';
 part 'text_theme.dart';
 part 'button_theme.dart';
+part 'form_theme.dart';

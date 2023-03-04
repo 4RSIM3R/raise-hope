@@ -7,37 +7,26 @@ import 'package:next_starter/presentation/theme/theme.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final _form = FormGroup({
-    'fullName': FormControl<String>(validators: [
-      Validators.required,
-    ]),
     'email': FormControl<String>(validators: [
       Validators.required,
       Validators.email,
-    ]),
-    'phone': FormControl<String>(validators: [
-      Validators.required,
     ]),
     'password': FormControl<String>(validators: [
       Validators.required,
       Validators.minLength(8),
     ]),
-    'confirmPassword': FormControl<String>(validators: [
-      Validators.required,
-      Validators.mustMatch("confirmPassword", "password")
-    ])
   });
 
   bool _isPasswordVisible = false;
-  bool _isPasswordConfirmationVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     fit: BoxFit.contain,
                   ),
                   Text(
-                    "Register as Volunteer",
+                    "Login as Volunteer",
                     style: context.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
@@ -72,16 +61,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Column(
                         children: [
                           ReactiveTextField(
-                            formControlName: "fullName",
-                            decoration: FormTheme.outlinedInput.copyWith(
-                              labelText: "Full Name",
-                            ),
-                            validationMessages: {
-                              'required': (error) => "Full Name can't be empty!"
-                            },
-                          ),
-                          24.verticalSpace,
-                          ReactiveTextField(
                             formControlName: "email",
                             decoration: FormTheme.outlinedInput.copyWith(
                               labelText: "Email",
@@ -89,16 +68,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             validationMessages: {
                               'required': (error) => "Email can't be empty!",
                               'email': (error) => "Invalid email format!"
-                            },
-                          ),
-                          24.verticalSpace,
-                          ReactiveTextField(
-                            formControlName: "phone",
-                            decoration: FormTheme.outlinedInput.copyWith(
-                              labelText: "Phone",
-                            ),
-                            validationMessages: {
-                              'required': (error) => "Phone can't be empty!"
                             },
                           ),
                           24.verticalSpace,
@@ -124,30 +93,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                   "Password needs to be at least 8 characters",
                             },
                           ),
-                          24.verticalSpace,
-                          ReactiveTextField(
-                            formControlName: "confirmPassword",
-                            decoration: FormTheme.outlinedInput.copyWith(
-                              labelText: "Confirm Password",
-                              suffixIcon: GestureDetector(
-                                onTap: () => setState(() {
-                                  _isPasswordConfirmationVisible =
-                                      !_isPasswordConfirmationVisible;
-                                }),
-                                child: Icon(_isPasswordConfirmationVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                              ),
-                            ),
-                            obscureText: !_isPasswordConfirmationVisible,
-                            autocorrect: false,
-                            enableSuggestions: false,
-                            validationMessages: {
-                              'required': (error) =>
-                                  "Password confirmation can't be empty!",
-                              'mustMatch': (error) => "Password didn't match!",
-                            },
-                          )
                         ],
                       ),
                     ),
@@ -156,21 +101,22 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(
                     width: 280,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        locator<AppRouter>().push(const LoginRoute());
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                           context.colorScheme.primary,
                         ),
-                        foregroundColor: MaterialStateProperty.all(
-                          Colors.white,
-                        ),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
                         padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
                             vertical: 16,
                           ),
                         ),
                       ),
-                      child: const Text("Register"),
+                      child: const Text("Login"),
                     ),
                   ),
                   16.verticalSpace,
@@ -215,7 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             fit: BoxFit.contain,
                           ),
                           8.horizontalSpace,
-                          const Text("Register with Google"),
+                          const Text("Login with Google"),
                         ],
                       ),
                     ),
@@ -227,15 +173,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.black87,
                       ),
                       children: [
-                        const TextSpan(text: "Already have an account? "),
+                        const TextSpan(text: "Don't have an account yet? "),
                         TextSpan(
                           style: context.textTheme.labelMedium?.copyWith(
                             color: context.colorScheme.primary,
                           ),
-                          text: "Login Now",
+                          text: "Register Now",
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              locator<AppRouter>().replace(const LoginRoute());
+                              locator<AppRouter>().replace(const RegisterRoute());
                             },
                         )
                       ],
