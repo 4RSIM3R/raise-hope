@@ -24,7 +24,7 @@ class CustomStepper extends StatefulWidget {
     required this.steps,
     required this.currentStep,
     this.activeColor,
-    this.animationDuration = 700,
+    this.animationDuration = 500,
     this.iconAnimationDuration = 300,
   });
 
