@@ -36,14 +36,10 @@ class _CustomStepperState extends State<CustomStepper> {
   int _previousStep = 0;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void didUpdateWidget(covariant CustomStepper oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-    if (widget.currentStep != _previousStep) {
-      setState(() {
-        _previousStep = widget.currentStep;
-      });
-    }
+    _previousStep = oldWidget.currentStep;
   }
 
   @override
