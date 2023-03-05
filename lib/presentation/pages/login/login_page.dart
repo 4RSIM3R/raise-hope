@@ -181,7 +181,8 @@ class _LoginPageState extends State<LoginPage> {
                           text: "Register Now",
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              locator<AppRouter>().replace(const RegisterRoute());
+                              locator<AppRouter>()
+                                  .push(const RegisterVolunteerRoute());
                             },
                         )
                       ],

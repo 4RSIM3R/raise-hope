@@ -1,7 +1,7 @@
 part of 'theme.dart';
 
 abstract class ButtonTheme {
-  static EdgeInsets defaultPadding = const EdgeInsets.symmetric(vertical: 24);
+  static EdgeInsets defaultPadding = const EdgeInsets.symmetric(vertical: 16);
 
   static ElevatedButtonThemeData elevated = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(

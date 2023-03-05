@@ -138,7 +138,7 @@ class OnboardingPage extends HookWidget {
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () {
-                      locator<AppRouter>().replace(RegisterRoute());
+                      locator<AppRouter>().replace(const LoginRoute());
                     },
                     child: const Text("Join as Volunteer"),
                   ),

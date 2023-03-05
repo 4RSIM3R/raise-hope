@@ -7,6 +7,7 @@ abstract class AppStyles {
         outlinedButtonTheme: ButtonTheme.outlined,
         textButtonTheme: ButtonTheme.text,
         filledButtonTheme: ButtonTheme.filled,
+        inputDecorationTheme: FormTheme.inputDecoration,
       );
 
   static ThemeData get lightTheme => _baseTheme.copyWith(
