@@ -23,10 +23,12 @@ class _RegisterVolunteerPageState extends State<RegisterVolunteerPage> {
   final PageController _pageController = PageController();
 
   final List<Widget> _steps = [
-    RegisterVolunterPersonalDataStep(),
+    const RegisterVolunterPersonalDataStep(),
     const RegisterVolunteerAvailability(),
     const RegisterVolunteerInterest(),
   ];
+
+  RegisterVolunteerState? _previousState;
 
   int _mapStateToIndex(RegisterVolunteerState state) => state.when(
         personalData: (_) => 0,
@@ -49,20 +51,37 @@ class _RegisterVolunteerPageState extends State<RegisterVolunteerPage> {
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            const SliverAppBar(),
+            SliverAppBar(
+              pinned: true,
+              expandedHeight: 100,
+              backgroundColor: context.colorScheme.background,
+              surfaceTintColor: context.colorScheme.background,
+              shadowColor: context.colorScheme.onBackground.withOpacity(0.2),
+              elevation: 1,
+              flexibleSpace: FlexibleSpaceBar(
+                expandedTitleScale: 1,
+                title: Text(
+                  "Register as Volunteer",
+                  style: context.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                centerTitle: true,
+              ),
+            ),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "Register as Volunteer",
-                      style: context.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    14.verticalSpace,
+                    // Text(
+                    //   "Register as Volunteer",
+                    //   style: context.textTheme.titleLarge?.copyWith(
+                    //     fontWeight: FontWeight.w700,
+                    //   ),
+                    // ),
+                    // 14.verticalSpace,
                     const Text(
                       "Register now to join our community of volunteers and make a difference in people's lives!",
                       textAlign: TextAlign.center,
@@ -120,7 +139,12 @@ class _RegisterVolunteerPageState extends State<RegisterVolunteerPage> {
     );
   }
 
-  void _onRegisterStateChanges(context, state) {
+  void _onRegisterStateChanges(context, RegisterVolunteerState state) {
+    if (_previousState != null &&
+        _mapStateToIndex(_previousState!) == _mapStateToIndex(state)) {
+      return;
+    }
+
     _scrollController.animateTo(
       0,
       duration: const Duration(milliseconds: 300),
@@ -131,5 +155,7 @@ class _RegisterVolunteerPageState extends State<RegisterVolunteerPage> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
+
+    _previousState = state;
   }
 }
