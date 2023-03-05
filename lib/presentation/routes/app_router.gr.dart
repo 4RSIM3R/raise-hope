@@ -35,6 +35,17 @@ class _$AppRouter extends RootStackRouter {
         child: const RegisterVolunteerPage(),
       );
     },
+    RegisterCongratulationRoute.name: (routeData) {
+      final args = routeData.argsAs<RegisterCongratulationRouteArgs>(
+          orElse: () => const RegisterCongratulationRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: RegisterCongratulationPage(
+          key: args.key,
+          isInstitution: args.isInstitution,
+        ),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -62,6 +73,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           RegisterVolunteerRoute.name,
           path: '/register-volunteer-page',
+        ),
+        RouteConfig(
+          RegisterCongratulationRoute.name,
+          path: '/register-congratulation-page',
         ),
         RouteConfig(
           HomeRoute.name,
@@ -108,6 +123,41 @@ class RegisterVolunteerRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'RegisterVolunteerRoute';
+}
+
+/// generated route for
+/// [RegisterCongratulationPage]
+class RegisterCongratulationRoute
+    extends PageRouteInfo<RegisterCongratulationRouteArgs> {
+  RegisterCongratulationRoute({
+    Key? key,
+    bool isInstitution = false,
+  }) : super(
+          RegisterCongratulationRoute.name,
+          path: '/register-congratulation-page',
+          args: RegisterCongratulationRouteArgs(
+            key: key,
+            isInstitution: isInstitution,
+          ),
+        );
+
+  static const String name = 'RegisterCongratulationRoute';
+}
+
+class RegisterCongratulationRouteArgs {
+  const RegisterCongratulationRouteArgs({
+    this.key,
+    this.isInstitution = false,
+  });
+
+  final Key? key;
+
+  final bool isInstitution;
+
+  @override
+  String toString() {
+    return 'RegisterCongratulationRouteArgs{key: $key, isInstitution: $isInstitution}';
+  }
 }
 
 /// generated route for

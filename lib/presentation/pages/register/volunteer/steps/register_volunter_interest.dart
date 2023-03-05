@@ -3,6 +3,8 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:next_starter/common/extensions/context_extension.dart';
+import 'package:next_starter/injection.dart';
+import 'package:next_starter/presentation/routes/app_router.dart';
 
 import '../cubit/register_volunteer_cubit.dart';
 
@@ -96,7 +98,13 @@ class _RegisterVolunteerInterestState extends State<RegisterVolunteerInterest> {
               16.horizontalSpace,
               Expanded(
                 child: FilledButton(
-                  onPressed: () => _save().nextStep(),
+                  onPressed: () {
+                    _save();
+
+                    locator<AppRouter>().push(
+                      RegisterCongratulationRoute(),
+                    );
+                  },
                   child: const Text("Finish"),
                 ),
               ),

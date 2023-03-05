@@ -68,4 +68,6 @@ abstract class ColorSchemes {
     outlineVariant: Color(0xFF3F484A),
     scrim: Color(0xFF000000),
   );
+
+  static const rawSecondaryColor = Color(0xFFF19700);
 }

@@ -120,11 +120,10 @@ class _RegisterVolunterPersonalDataStepState
               form: () => _form,
               builder: (context, form, child) {
                 return FilledButton(
+                  // TODO: disable button when form is invalid
                   onPressed: true
                       ? () {
-                          context.read<RegisterVolunteerCubit>()
-                            ..updatePersonalData()
-                            ..nextStep();
+                          _save().nextStep();
                         }
                       : null,
                   child: const Text('Submit'),
@@ -137,15 +136,14 @@ class _RegisterVolunterPersonalDataStepState
     );
   }
 
-  void _save() {
-    if (_form.valid) {
-      context.read<RegisterVolunteerCubit>().updatePersonalData(
-            fullName: _form.control('fullName').value,
-            email: _form.control('email').value,
-            phoneNumber: _form.control('phoneNumber').value,
-            address: _form.control('address').value,
-            password: _form.control('password').value,
-          );
-    }
+  RegisterVolunteerCubit _save() {
+    return context.read<RegisterVolunteerCubit>()
+      ..updatePersonalData(
+        fullName: _form.control('fullName').value,
+        email: _form.control('email').value,
+        phoneNumber: _form.control('phoneNumber').value,
+        address: _form.control('address').value,
+        password: _form.control('password').value,
+      );
   }
 }
