@@ -29,16 +29,21 @@ class _$AppRouter extends RootStackRouter {
         child: const OnboardingPage(),
       );
     },
-    RegisterRoute.name: (routeData) {
+    RegisterVolunteerRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const RegisterPage(),
+        child: const RegisterVolunteerPage(),
       );
     },
-    RegisterMultiStepRoute.name: (routeData) {
+    RegisterCongratulationRoute.name: (routeData) {
+      final args = routeData.argsAs<RegisterCongratulationRouteArgs>(
+          orElse: () => const RegisterCongratulationRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const RegisterMultiStepPage(),
+        child: RegisterCongratulationPage(
+          key: args.key,
+          isInstitution: args.isInstitution,
+        ),
       );
     },
     HomeRoute.name: (routeData) {
@@ -66,12 +71,12 @@ class _$AppRouter extends RootStackRouter {
           path: '/onboarding-page',
         ),
         RouteConfig(
-          RegisterRoute.name,
-          path: '/register-page',
+          RegisterVolunteerRoute.name,
+          path: '/register-volunteer-page',
         ),
         RouteConfig(
-          RegisterMultiStepRoute.name,
-          path: '/register-multi-step-page',
+          RegisterCongratulationRoute.name,
+          path: '/register-congratulation-page',
         ),
         RouteConfig(
           HomeRoute.name,
@@ -109,27 +114,50 @@ class OnboardingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [RegisterPage]
-class RegisterRoute extends PageRouteInfo<void> {
-  const RegisterRoute()
+/// [RegisterVolunteerPage]
+class RegisterVolunteerRoute extends PageRouteInfo<void> {
+  const RegisterVolunteerRoute()
       : super(
-          RegisterRoute.name,
-          path: '/register-page',
+          RegisterVolunteerRoute.name,
+          path: '/register-volunteer-page',
         );
 
-  static const String name = 'RegisterRoute';
+  static const String name = 'RegisterVolunteerRoute';
 }
 
 /// generated route for
-/// [RegisterMultiStepPage]
-class RegisterMultiStepRoute extends PageRouteInfo<void> {
-  const RegisterMultiStepRoute()
-      : super(
-          RegisterMultiStepRoute.name,
-          path: '/register-multi-step-page',
+/// [RegisterCongratulationPage]
+class RegisterCongratulationRoute
+    extends PageRouteInfo<RegisterCongratulationRouteArgs> {
+  RegisterCongratulationRoute({
+    Key? key,
+    bool isInstitution = false,
+  }) : super(
+          RegisterCongratulationRoute.name,
+          path: '/register-congratulation-page',
+          args: RegisterCongratulationRouteArgs(
+            key: key,
+            isInstitution: isInstitution,
+          ),
         );
 
-  static const String name = 'RegisterMultiStepRoute';
+  static const String name = 'RegisterCongratulationRoute';
+}
+
+class RegisterCongratulationRouteArgs {
+  const RegisterCongratulationRouteArgs({
+    this.key,
+    this.isInstitution = false,
+  });
+
+  final Key? key;
+
+  final bool isInstitution;
+
+  @override
+  String toString() {
+    return 'RegisterCongratulationRouteArgs{key: $key, isInstitution: $isInstitution}';
+  }
 }
 
 /// generated route for
