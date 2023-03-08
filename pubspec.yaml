@@ -65,6 +65,8 @@ dependencies:
   flutter_animate: ^4.1.0
   expandable_page_view: ^1.0.17
   community_material_icon: ^5.9.55
+  flutter_riverpod: ^2.3.0
+  dropdown_search: ^5.0.6
 
 dev_dependencies:
   flutter_test:
@@ -106,6 +108,7 @@ flutter:
     - assets/icon/
     - assets/images/
     - assets/images/onboarding/
+    - assets/json/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

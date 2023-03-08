@@ -29,8 +29,34 @@ abstract class ApiService {
     return dio;
   }
 
+  @Named("CountryStateCity")
   @lazySingleton
-  InternetConnectionChecker internetConnectionChecker() => InternetConnectionChecker();
+  Dio dioCountryStateCity() {
+    // TODO: implement dioCountryStateCity
+    throw UnimplementedError();
+    // final dio = Dio(
+    //   BaseOptions(
+    //     baseUrl: 'https://beceran.nexteam.id/api/v1/',
+    //     sendTimeout: const Duration(milliseconds: 1000 * 60 * 3),
+    //     connectTimeout: const Duration(milliseconds: 1000 * 60 * 3),
+    //     receiveTimeout: const Duration(milliseconds: 1000 * 60 * 3),
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //   ),
+    // );
+
+    // if (kDebugMode) {
+    //   dio.interceptors.add(PrettyDioLogger());
+    // }
+
+    // return dio;
+  }
+
+  @lazySingleton
+  InternetConnectionChecker internetConnectionChecker() =>
+      InternetConnectionChecker();
 
   @lazySingleton
   ImagePicker get imagePicker => ImagePicker();

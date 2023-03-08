@@ -11,5 +11,6 @@ abstract class FormTheme {
   static const inputDecoration = InputDecorationTheme(
     border: OutlineInputBorder(),
     floatingLabelBehavior: FloatingLabelBehavior.always,
+    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
   );
 }

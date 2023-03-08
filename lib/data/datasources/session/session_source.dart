@@ -1,10 +1,14 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SessionSource {
   final storage = const FlutterSecureStorage();
-  static const String key = 'token';
+
+  SessionSource(this.key);
+
+  final String key;
 
   Future<String?> get token async {
     return await storage.read(key: key);
@@ -20,3 +24,6 @@ class SessionSource {
 
   Future<bool> get hasSession async => await storage.containsKey(key: key);
 }
+
+final sessionSourceProvider =
+    Provider.family<SessionSource, String>((ref, key) => SessionSource(key));

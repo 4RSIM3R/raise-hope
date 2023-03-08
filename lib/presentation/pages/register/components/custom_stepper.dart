@@ -105,7 +105,7 @@ class _CustomStepperState extends State<CustomStepper> {
     final intervalDelay = widget.animationDuration / totalAnimationDuration;
 
     return SizedBox(
-      width: 64,
+      width: 66,
       child: Column(
         children: [
           AnimatedContainer(

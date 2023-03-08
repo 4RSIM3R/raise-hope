@@ -14,12 +14,14 @@ import 'package:internet_connection_checker/internet_connection_checker.dart'
 import 'package:next_starter/common/network/network_info.dart' as _i8;
 import 'package:next_starter/common/utils/image_resize.dart' as _i6;
 import 'package:next_starter/data/datasources/session/session_source.dart'
-    as _i10;
-import 'package:next_starter/presentation/pages/register/volunteer/cubit/register_volunteer_cubit.dart'
+    as _i11;
+import 'package:next_starter/presentation/pages/register/institution/cubit/register_institution_cubit.dart'
     as _i9;
+import 'package:next_starter/presentation/pages/register/volunteer/cubit/register_volunteer_cubit.dart'
+    as _i10;
 import 'package:next_starter/presentation/routes/app_router.dart' as _i3;
 
-import 'data/datasources/network/network_source.dart' as _i11;
+import 'data/datasources/network/network_source.dart' as _i12;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -37,15 +39,21 @@ _i1.GetIt $initGetIt(
   final apiService = _$ApiService();
   gh.lazySingleton<_i3.AppRouter>(() => _i3.AppRouter());
   gh.lazySingleton<_i4.Dio>(() => apiService.dio());
+  gh.lazySingleton<_i4.Dio>(
+    () => apiService.dioCountryStateCity(),
+    instanceName: 'CountryStateCity',
+  );
   gh.lazySingleton<_i5.ImagePicker>(() => apiService.imagePicker);
   gh.lazySingleton<_i6.ImageResizeUtils>(() => _i6.ImageResizeUtils());
   gh.lazySingleton<_i7.InternetConnectionChecker>(
       () => apiService.internetConnectionChecker());
   gh.lazySingleton<_i8.NetworkInfo>(
       () => _i8.NetworkInfoImpl(gh<_i7.InternetConnectionChecker>()));
-  gh.factory<_i9.RegisterVolunteerCubit>(() => _i9.RegisterVolunteerCubit());
-  gh.lazySingleton<_i10.SessionSource>(() => _i10.SessionSource());
+  gh.factory<_i9.RegisterInstitutionCubit>(
+      () => _i9.RegisterInstitutionCubit());
+  gh.factory<_i10.RegisterVolunteerCubit>(() => _i10.RegisterVolunteerCubit());
+  gh.lazySingleton<_i11.SessionSource>(() => _i11.SessionSource(gh<String>()));
   return getIt;
 }
 
-class _$ApiService extends _i11.ApiService {}
+class _$ApiService extends _i12.ApiService {}
