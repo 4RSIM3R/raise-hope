@@ -35,6 +35,12 @@ class _$AppRouter extends RootStackRouter {
         child: const RegisterVolunteerPage(),
       );
     },
+    RegisterInstitutionRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const RegisterInstitutionPage(),
+      );
+    },
     RegisterCongratulationRoute.name: (routeData) {
       final args = routeData.argsAs<RegisterCongratulationRouteArgs>(
           orElse: () => const RegisterCongratulationRouteArgs());
@@ -91,6 +97,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           RegisterVolunteerRoute.name,
           path: '/register-volunteer-page',
+        ),
+        RouteConfig(
+          RegisterInstitutionRoute.name,
+          path: '/register-institution-page',
         ),
         RouteConfig(
           RegisterCongratulationRoute.name,
@@ -158,6 +168,18 @@ class RegisterVolunteerRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'RegisterVolunteerRoute';
+}
+
+/// generated route for
+/// [RegisterInstitutionPage]
+class RegisterInstitutionRoute extends PageRouteInfo<void> {
+  const RegisterInstitutionRoute()
+      : super(
+          RegisterInstitutionRoute.name,
+          path: '/register-institution-page',
+        );
+
+  static const String name = 'RegisterInstitutionRoute';
 }
 
 /// generated route for
