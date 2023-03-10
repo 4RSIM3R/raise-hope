@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                 primary: ColorSchemes.rawSecondaryColor,
               ),
             ),
-      child: Builder(builder: (context) => _buildContent(context)),
+      child: Builder(builder: _buildContent),
     );
   }
 
@@ -84,10 +84,6 @@ class _LoginPageState extends State<LoginPage> {
                             "${widget.isInstitution ? 'Institution ' : ''}Email",
                         hintText: 'example@gmail.com',
                       ),
-                      validationMessages: {
-                        'required': (error) => "Email can't be empty!",
-                        'email': (error) => "Invalid email format!"
-                      },
                     ),
                     24.verticalSpace,
                     ReactiveTextField(
@@ -109,11 +105,6 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: !_isPasswordVisible,
                       autocorrect: false,
                       enableSuggestions: false,
-                      validationMessages: {
-                        'required': (error) => "Password can't be empty!",
-                        'minLength': (error) =>
-                            "Password needs to be at least 8 characters",
-                      },
                     ),
                   ],
                 ),
