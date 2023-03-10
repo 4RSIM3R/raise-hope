@@ -138,7 +138,7 @@ class OnboardingPage extends HookWidget {
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () {
-                      locator<AppRouter>().replace(const LoginRoute());
+                      locator<AppRouter>().push(LoginRoute());
                     },
                     child: const Text("Join as Volunteer"),
                   ),
@@ -147,7 +147,11 @@ class OnboardingPage extends HookWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      locator<AppRouter>().push(LoginRoute(
+                        isInstitution: true,
+                      ));
+                    },
                     child: const Text("Join as Institution / Organization"),
                   ),
                 ),
