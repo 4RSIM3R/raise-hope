@@ -1,4 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:next_starter/presentation/layouts/home/home_discussion_page.dart';
+import 'package:next_starter/presentation/layouts/home/home_main_page.dart';
+import 'package:next_starter/presentation/layouts/home/home_mission_page.dart';
 import 'package:next_starter/presentation/pages/home/home_page.dart';
 import 'package:next_starter/presentation/pages/login/login_page.dart';
 import 'package:next_starter/presentation/pages/register/register_congratulation_page.dart';
@@ -18,7 +21,14 @@ part 'app_router.gr.dart';
     AutoRoute(page: OnboardingPage),
     AutoRoute(page: RegisterVolunteerPage),
     AutoRoute(page: RegisterCongratulationPage),
-    AutoRoute(page: HomePage),
+    AutoRoute(
+      page: HomePage,
+      children: [
+        AutoRoute(page: HomeMainPage, initial: true),
+        AutoRoute(page: HomeMissionPage),
+        AutoRoute(page: HomeDiscussionPage),
+      ],
+    ),
     AutoRoute(page: LoginPage),
   ],
 )

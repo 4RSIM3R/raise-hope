@@ -58,6 +58,24 @@ class _$AppRouter extends RootStackRouter {
         child: const LoginPage(),
       );
     },
+    HomeMainRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const HomeMainPage(),
+      );
+    },
+    HomeMissionRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const HomeMissionPage(),
+      );
+    },
+    HomeDiscussionRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const HomeDiscussionPage(),
+      );
+    },
   };
 
   @override
@@ -81,6 +99,23 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           HomeRoute.name,
           path: '/home-page',
+          children: [
+            RouteConfig(
+              HomeMainRoute.name,
+              path: '',
+              parent: HomeRoute.name,
+            ),
+            RouteConfig(
+              HomeMissionRoute.name,
+              path: 'home-mission-page',
+              parent: HomeRoute.name,
+            ),
+            RouteConfig(
+              HomeDiscussionRoute.name,
+              path: 'home-discussion-page',
+              parent: HomeRoute.name,
+            ),
+          ],
         ),
         RouteConfig(
           LoginRoute.name,
@@ -163,10 +198,11 @@ class RegisterCongratulationRouteArgs {
 /// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute()
+  const HomeRoute({List<PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           path: '/home-page',
+          initialChildren: children,
         );
 
   static const String name = 'HomeRoute';
@@ -182,4 +218,40 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+}
+
+/// generated route for
+/// [HomeMainPage]
+class HomeMainRoute extends PageRouteInfo<void> {
+  const HomeMainRoute()
+      : super(
+          HomeMainRoute.name,
+          path: '',
+        );
+
+  static const String name = 'HomeMainRoute';
+}
+
+/// generated route for
+/// [HomeMissionPage]
+class HomeMissionRoute extends PageRouteInfo<void> {
+  const HomeMissionRoute()
+      : super(
+          HomeMissionRoute.name,
+          path: 'home-mission-page',
+        );
+
+  static const String name = 'HomeMissionRoute';
+}
+
+/// generated route for
+/// [HomeDiscussionPage]
+class HomeDiscussionRoute extends PageRouteInfo<void> {
+  const HomeDiscussionRoute()
+      : super(
+          HomeDiscussionRoute.name,
+          path: 'home-discussion-page',
+        );
+
+  static const String name = 'HomeDiscussionRoute';
 }

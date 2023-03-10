@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 280,
                     child: ElevatedButton(
                       onPressed: () {
-                        locator<AppRouter>().push(const LoginRoute());
+                        locator<AppRouter>().push(const HomeRoute());
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
