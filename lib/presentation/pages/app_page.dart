@@ -1,5 +1,6 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/services.dart';
 import 'package:next_starter/injection.dart';
 import 'package:next_starter/presentation/routes/app_router.dart';
 import 'package:flutter/material.dart';
@@ -20,16 +21,22 @@ class _AppPageState extends State<AppPage> {
     return AdaptiveSizer(
       // from figma
       designSize: const Size(412, 852),
-      builder: (_) => MaterialApp.router(
-        title: 'Rise Hope',
-        theme: AppStyles.lightTheme,
-        darkTheme: AppStyles.darkTheme,
-        themeMode: ThemeMode.light,
-        routeInformationParser: _appRouter.defaultRouteParser(),
-        routerDelegate: _appRouter.delegate(
-          navigatorObservers: () => [
-            MyObserver(),
-          ],
+      builder: (_) => AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        child: MaterialApp.router(
+          title: 'Rise Hope',
+          theme: AppStyles.lightTheme,
+          darkTheme: AppStyles.darkTheme,
+          themeMode: ThemeMode.light,
+          routeInformationParser: _appRouter.defaultRouteParser(),
+          routerDelegate: _appRouter.delegate(
+            navigatorObservers: () => [
+              MyObserver(),
+            ],
+          ),
         ),
       ),
     );

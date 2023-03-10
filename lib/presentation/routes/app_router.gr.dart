@@ -59,9 +59,14 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     LoginRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginRouteArgs>(
+          orElse: () => const LoginRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const LoginPage(),
+        child: LoginPage(
+          key: args.key,
+          isInstitution: args.isInstitution,
+        ),
       );
     },
     HomeMainRoute.name: (routeData) {
@@ -232,14 +237,36 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [LoginPage]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute()
-      : super(
+class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
+  LoginRoute({
+    Key? key,
+    bool isInstitution = false,
+  }) : super(
           LoginRoute.name,
           path: '/login-page',
+          args: LoginRouteArgs(
+            key: key,
+            isInstitution: isInstitution,
+          ),
         );
 
   static const String name = 'LoginRoute';
+}
+
+class LoginRouteArgs {
+  const LoginRouteArgs({
+    this.key,
+    this.isInstitution = false,
+  });
+
+  final Key? key;
+
+  final bool isInstitution;
+
+  @override
+  String toString() {
+    return 'LoginRouteArgs{key: $key, isInstitution: $isInstitution}';
+  }
 }
 
 /// generated route for
