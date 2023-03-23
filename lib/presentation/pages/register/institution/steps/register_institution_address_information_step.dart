@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,28 +27,19 @@ class RegisterInstitutiondAddressInformationStep
 class _RegisterVolunterdAddressInformationStepState
     extends ConsumerState<RegisterInstitutiondAddressInformationStep> {
   final _form = FormGroup({
-    'country': FormControl<Country>(validators: [
-      Validators.required,
-    ]),
+    'country': FormControl<Country>(validators: [Validators.required]),
     'province': FormControl<Province>(
-      validators: [
-        Validators.required,
-      ],
+      validators: [Validators.required],
       disabled: true,
     ),
     'city': FormControl<City>(
-      validators: [
-        Validators.required,
-      ],
+      validators: [Validators.required],
       disabled: true,
     ),
-    'address': FormControl<String>(validators: [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
+    'address': FormControl<String>(validators: [Validators.required]),
     'postalCode': FormControl<String>(validators: [
       Validators.required,
-      Validators.minLength(3),
+      Validators.minLength(5),
     ]),
   });
 
@@ -138,8 +128,8 @@ class _RegisterVolunterdAddressInformationStepState
                 ),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
-                    labelText: "City",
-                    hintText: "City",
+                    labelText: "Country",
+                    hintText: "Country",
                   ),
                 ),
               );
@@ -192,6 +182,7 @@ class _RegisterVolunterdAddressInformationStepState
             }),
             33.verticalSpace,
             Consumer(builder: (context, ref, _) {
+              // TODO: separate into a provider
               final country = ref.watch(
                 selectedLocationProvider.select((value) => value.country),
               );
@@ -244,6 +235,8 @@ class _RegisterVolunterdAddressInformationStepState
             33.verticalSpace,
             ReactiveTextField(
               formControlName: 'address',
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.streetAddress,
               decoration: const InputDecoration(
                 labelText: 'Address',
                 hintText: 'Address',
@@ -252,6 +245,7 @@ class _RegisterVolunterdAddressInformationStepState
             33.verticalSpace,
             ReactiveTextField(
               formControlName: 'postalCode',
+              textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                 labelText: 'Postal Code',
                 hintText: 'Postal Code',
@@ -270,12 +264,15 @@ class _RegisterVolunterdAddressInformationStepState
     if (oldState.country != state.country) {
       _form.control('province').value = null;
       _form.control('city').value = null;
+      _form.control('city').markAsDisabled();
     }
     if (oldState.province != state.province) {
       _form.control('city').value = null;
     }
 
     _save();
+
+    setState(() {});
   }
 
   Row _buildButton() {
@@ -289,9 +286,11 @@ class _RegisterVolunterdAddressInformationStepState
         ),
         16.horizontalSpace,
         Expanded(
-          child: FilledButton(
-            onPressed: () => _save().nextStep(),
-            child: const Text("Next"),
+          child: ReactiveFormConsumer(
+            builder: (_, form, __) => FilledButton(
+              onPressed: form.valid ? () => _save().nextStep() : null,
+              child: const Text("Next"),
+            ),
           ),
         ),
       ],

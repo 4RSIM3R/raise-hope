@@ -2,13 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:next_starter/common/enums/name_of_time_day.dart';
+import 'package:next_starter/common/errors/api_exception.dart';
+import 'package:next_starter/data/repositories/auth_repository.dart';
 
-part 'register_volunteer_state.dart';
 part 'register_volunteer_cubit.freezed.dart';
+part 'register_volunteer_state.dart';
 
 @injectable
 class RegisterVolunteerCubit extends Cubit<RegisterVolunteerState> {
-  RegisterVolunteerCubit()
+  final AuthRepository _authRepository;
+
+  RegisterVolunteerCubit(this._authRepository)
       : super(
           const RegisterVolunteerState.personalData(
             RegisterVolunteerData(),
@@ -68,6 +72,22 @@ class RegisterVolunteerCubit extends Cubit<RegisterVolunteerState> {
       personalData: (data) => emit(RegisterVolunteerState.availability(data)),
       availability: (data) => emit(RegisterVolunteerState.interest(data)),
       orElse: () {},
+    );
+  }
+
+  Future<ApiException?> submit() {
+    return state.maybeWhen(
+      interest: _submit,
+      orElse: () async => null,
+    );
+  }
+
+  Future<ApiException?> _submit(RegisterVolunteerData data) async {
+    final response = await _authRepository.registerVolunteer(data);
+
+    return response.fold(
+      (l) => l,
+      (r) => null,
     );
   }
 }

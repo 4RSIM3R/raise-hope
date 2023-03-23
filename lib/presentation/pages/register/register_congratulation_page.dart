@@ -110,7 +110,10 @@ class RegisterCongratulationPage extends StatelessWidget {
                       ? 'Search for Volunteer!'
                       : 'Start Your Mission!',
                 ),
-                onPressed: () => locator<AppRouter>().pop(),
+                onPressed: () => locator<AppRouter>().pushAndPopUntil(
+                  const HomeRoute(),
+                  predicate: (route) => route.isFirst,
+                ),
               ),
             ),
             32.verticalSpace,

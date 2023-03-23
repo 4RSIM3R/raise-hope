@@ -23,7 +23,7 @@ class RegisterInstitutionBackgroundStep extends StatefulWidget {
 
 class _RegisterVolunterPersonalDataStepState
     extends State<RegisterInstitutionBackgroundStep> {
-  final _form = FormGroup({
+  late final _form = FormGroup({
     'organizationType': FormControl<OrganizationType>(validators: [
       Validators.required,
     ]),
@@ -33,10 +33,15 @@ class _RegisterVolunterPersonalDataStepState
     'typeOfHelp': FormGroup({
       for (final typeOfHelp in TypeOfHelp.values)
         typeOfHelp.name: FormControl<bool>(value: false),
-    }),
+    }, validators: [
+      // required at least one type of help
+      _mustSelectAtleastOne,
+    ]),
   });
 
   late final StreamSubscription _formValueChangesSubscription;
+
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -183,20 +188,55 @@ class _RegisterVolunterPersonalDataStepState
         ),
         16.horizontalSpace,
         Expanded(
-          child: FilledButton(
-            onPressed: () {
-              _save();
-              locator<AppRouter>().push(
-                RegisterCongratulationRoute(
-                  isInstitution: true,
-                ),
-              );
-            },
-            child: const Text("Submit"),
+          child: ReactiveFormConsumer(
+            builder: (_, form, __) => FilledButton(
+              onPressed: form.valid ? _submit : null,
+              child: _isLoading
+                  ? SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: context.colorScheme.onPrimary,
+                      ),
+                    )
+                  : const Text("Submit"),
+            ),
           ),
         ),
       ],
     );
+  }
+
+  Map<String, dynamic>? _mustSelectAtleastOne(control) {
+    final form = control as FormGroup;
+
+    final selectedTypeOfHelp = TypeOfHelp.values
+        .map((e) => form.control(e.name))
+        .where((control) => control.value == true)
+        .toList();
+
+    return {
+      if (selectedTypeOfHelp.isEmpty) 'requiredTrue': true,
+    };
+  }
+
+  void _submit() async {
+    _save();
+
+    setState(() => _isLoading = true);
+
+    final error = await context.read<RegisterInstitutionCubit>().submit();
+
+    setState(() => _isLoading = false);
+
+    if (error != null && context.mounted) {
+      context.showSnackbar(title: 'Whoops!', message: error.message);
+    } else {
+      locator<AppRouter>().push(
+        RegisterCongratulationRoute(isInstitution: true),
+      );
+    }
   }
 
   RegisterInstitutionCubit _save() {

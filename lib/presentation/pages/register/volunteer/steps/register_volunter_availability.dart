@@ -119,7 +119,9 @@ class _RegisterVolunteerAvailabilityState
               16.horizontalSpace,
               Expanded(
                 child: FilledButton(
-                  onPressed: () => _save().nextStep(),
+                  onPressed: _selectedDays.isEmpty || _selectedTime.isEmpty
+                      ? null
+                      : () => _save().nextStep(),
                   child: const Text("Next"),
                 ),
               ),

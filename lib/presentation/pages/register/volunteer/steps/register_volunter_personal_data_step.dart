@@ -25,7 +25,6 @@ class _RegisterVolunterPersonalDataStepState
     ]),
     'phoneNumber': FormControl<String>(validators: [
       Validators.required,
-      Validators.minLength(10),
     ]),
     'address': FormControl<String>(validators: [
       Validators.required,
@@ -61,6 +60,7 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'fullName',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.name,
             decoration: const InputDecoration(
               labelText: 'Full Name',
               hintText: 'Enter your full name',
@@ -70,6 +70,7 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'email',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
               labelText: 'Email',
               hintText: 'Enter your email address',
@@ -79,6 +80,7 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'phoneNumber',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
               labelText: 'Phone Number',
               hintText: 'Enter your phone number',
@@ -88,6 +90,7 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'address',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.streetAddress,
             decoration: const InputDecoration(
               labelText: 'Address',
               hintText: 'Enter your address',
@@ -97,6 +100,8 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'password',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
             decoration: const InputDecoration(
               labelText: 'Password',
               hintText: 'Enter your password',
@@ -116,19 +121,11 @@ class _RegisterVolunterPersonalDataStepState
         Expanded(
           child: SizedBox(
             width: double.infinity,
-            child: ReactiveFormBuilder(
-              form: () => _form,
-              builder: (context, form, child) {
-                return FilledButton(
-                  // TODO: disable button when form is invalid
-                  onPressed: true
-                      ? () {
-                          _save().nextStep();
-                        }
-                      : null,
-                  child: const Text('Submit'),
-                );
-              },
+            child: ReactiveFormConsumer(
+              builder: (context, form, child) => FilledButton(
+                onPressed: form.valid ? () => _save().nextStep() : null,
+                child: const Text('Next'),
+              ),
             ),
           ),
         ),
