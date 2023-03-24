@@ -33,14 +33,12 @@ class OnboardingPage extends HookWidget {
     ),
     OnboardingData(
       title: "Connect with others",
-      description:
-          "Meet like-minded individuals and build meaningful connections in your community",
+      description: "Meet like-minded individuals and build meaningful connections in your community",
       image: "assets/images/onboarding/2.png",
     ),
     OnboardingData(
       title: "Build skills",
-      description:
-          "Gain new skills and experiences that can help you in your personal and professional life.",
+      description: "Gain new skills and experiences that can help you in your personal and professional life.",
       image: "assets/images/onboarding/3.png",
     ),
   ];
@@ -104,8 +102,7 @@ class OnboardingPage extends HookWidget {
                       decoration: BoxDecoration(
                         color: currentPage.value == index
                             ? context.theme.colorScheme.primary
-                            : context.theme.colorScheme.onBackground
-                                .withOpacity(0.2),
+                            : context.theme.colorScheme.onBackground.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),

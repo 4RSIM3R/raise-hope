@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
         ],
         builder: (ctx, child, controller) {
           return Scaffold(
+            backgroundColor: Colors.white,
             key: _key,
             appBar: AppBar(
               backgroundColor: context.colorScheme.primary,

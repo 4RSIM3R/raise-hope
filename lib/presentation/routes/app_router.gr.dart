@@ -69,6 +69,12 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    KarmaMainRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const KarmaMainPage(),
+      );
+    },
     HomeMainRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -135,6 +141,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           LoginRoute.name,
           path: '/login-page',
+        ),
+        RouteConfig(
+          KarmaMainRoute.name,
+          path: '/karma-main-page',
         ),
       ];
 }
@@ -267,6 +277,18 @@ class LoginRouteArgs {
   String toString() {
     return 'LoginRouteArgs{key: $key, isInstitution: $isInstitution}';
   }
+}
+
+/// generated route for
+/// [KarmaMainPage]
+class KarmaMainRoute extends PageRouteInfo<void> {
+  const KarmaMainRoute()
+      : super(
+          KarmaMainRoute.name,
+          path: '/karma-main-page',
+        );
+
+  static const String name = 'KarmaMainRoute';
 }
 
 /// generated route for

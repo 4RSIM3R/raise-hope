@@ -3,6 +3,7 @@ import 'package:next_starter/presentation/layouts/home/home_discussion_page.dart
 import 'package:next_starter/presentation/layouts/home/home_main_page.dart';
 import 'package:next_starter/presentation/layouts/home/home_mission_page.dart';
 import 'package:next_starter/presentation/pages/home/home_page.dart';
+import 'package:next_starter/presentation/pages/karma/main/karma_main_page.dart';
 import 'package:next_starter/presentation/pages/login/login_page.dart';
 import 'package:next_starter/presentation/pages/register/institution/register_institution_page.dart';
 import 'package:next_starter/presentation/pages/register/register_congratulation_page.dart';
@@ -32,6 +33,7 @@ part 'app_router.gr.dart';
       ],
     ),
     AutoRoute(page: LoginPage),
+    AutoRoute(page: KarmaMainPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
