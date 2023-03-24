@@ -45,6 +45,8 @@ class RegisterVolunteerInterest extends StatefulWidget {
 class _RegisterVolunteerInterestState extends State<RegisterVolunteerInterest> {
   final List<int> _selectedInterest = [];
 
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -98,14 +100,17 @@ class _RegisterVolunteerInterestState extends State<RegisterVolunteerInterest> {
               16.horizontalSpace,
               Expanded(
                 child: FilledButton(
-                  onPressed: () {
-                    _save();
-
-                    locator<AppRouter>().push(
-                      RegisterCongratulationRoute(),
-                    );
-                  },
-                  child: const Text("Finish"),
+                  onPressed: _selectedInterest.isNotEmpty ? _submit : null,
+                  child: _isLoading
+                      ? SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: context.colorScheme.onPrimary,
+                          ),
+                        )
+                      : const Text("Submit"),
                 ),
               ),
             ],
@@ -187,5 +192,23 @@ class _RegisterVolunteerInterestState extends State<RegisterVolunteerInterest> {
     });
 
     _save();
+  }
+
+  void _submit() async {
+    _save();
+
+    setState(() => _isLoading = true);
+
+    final error = await context.read<RegisterVolunteerCubit>().submit();
+
+    setState(() => _isLoading = false);
+
+    if (error != null && context.mounted) {
+      context.showSnackbar(title: 'Whoops!', message: error.message);
+    } else {
+      locator<AppRouter>().push(
+        RegisterCongratulationRoute(),
+      );
+    }
   }
 }

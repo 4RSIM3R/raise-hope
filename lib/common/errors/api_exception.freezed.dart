@@ -16,13 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ApiException {
+  String get message => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String message) serverException,
     required TResult Function(String message, Map<String, dynamic> errors)
         unprocessableEntity,
     required TResult Function(String message) unAuthorized,
-    required TResult Function() network,
+    required TResult Function(String message) network,
     required TResult Function(String message) database,
   }) =>
       throw _privateConstructorUsedError;
@@ -32,7 +33,7 @@ mixin _$ApiException {
     TResult? Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult? Function(String message)? unAuthorized,
-    TResult? Function()? network,
+    TResult? Function(String message)? network,
     TResult? Function(String message)? database,
   }) =>
       throw _privateConstructorUsedError;
@@ -42,7 +43,7 @@ mixin _$ApiException {
     TResult Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult Function(String message)? unAuthorized,
-    TResult Function()? network,
+    TResult Function(String message)? network,
     TResult Function(String message)? database,
     required TResult orElse(),
   }) =>
@@ -75,6 +76,10 @@ mixin _$ApiException {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ApiExceptionCopyWith<ApiException> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -82,6 +87,8 @@ abstract class $ApiExceptionCopyWith<$Res> {
   factory $ApiExceptionCopyWith(
           ApiException value, $Res Function(ApiException) then) =
       _$ApiExceptionCopyWithImpl<$Res, ApiException>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -93,13 +100,28 @@ class _$ApiExceptionCopyWithImpl<$Res, $Val extends ApiException>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_value.copyWith(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_ServerExceptionCopyWith<$Res> {
+abstract class _$$_ServerExceptionCopyWith<$Res>
+    implements $ApiExceptionCopyWith<$Res> {
   factory _$$_ServerExceptionCopyWith(
           _$_ServerException value, $Res Function(_$_ServerException) then) =
       __$$_ServerExceptionCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({String message});
 }
@@ -163,7 +185,7 @@ class _$_ServerException implements _ServerException {
     required TResult Function(String message, Map<String, dynamic> errors)
         unprocessableEntity,
     required TResult Function(String message) unAuthorized,
-    required TResult Function() network,
+    required TResult Function(String message) network,
     required TResult Function(String message) database,
   }) {
     return serverException(message);
@@ -176,7 +198,7 @@ class _$_ServerException implements _ServerException {
     TResult? Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult? Function(String message)? unAuthorized,
-    TResult? Function()? network,
+    TResult? Function(String message)? network,
     TResult? Function(String message)? database,
   }) {
     return serverException?.call(message);
@@ -189,7 +211,7 @@ class _$_ServerException implements _ServerException {
     TResult Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult Function(String message)? unAuthorized,
-    TResult Function()? network,
+    TResult Function(String message)? network,
     TResult Function(String message)? database,
     required TResult orElse(),
   }) {
@@ -244,17 +266,21 @@ abstract class _ServerException implements ApiException {
   const factory _ServerException({required final String message}) =
       _$_ServerException;
 
+  @override
   String get message;
+  @override
   @JsonKey(ignore: true)
   _$$_ServerExceptionCopyWith<_$_ServerException> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_UnprocessableEntityCopyWith<$Res> {
+abstract class _$$_UnprocessableEntityCopyWith<$Res>
+    implements $ApiExceptionCopyWith<$Res> {
   factory _$$_UnprocessableEntityCopyWith(_$_UnprocessableEntity value,
           $Res Function(_$_UnprocessableEntity) then) =
       __$$_UnprocessableEntityCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({String message, Map<String, dynamic> errors});
 }
@@ -335,7 +361,7 @@ class _$_UnprocessableEntity implements _UnprocessableEntity {
     required TResult Function(String message, Map<String, dynamic> errors)
         unprocessableEntity,
     required TResult Function(String message) unAuthorized,
-    required TResult Function() network,
+    required TResult Function(String message) network,
     required TResult Function(String message) database,
   }) {
     return unprocessableEntity(message, errors);
@@ -348,7 +374,7 @@ class _$_UnprocessableEntity implements _UnprocessableEntity {
     TResult? Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult? Function(String message)? unAuthorized,
-    TResult? Function()? network,
+    TResult? Function(String message)? network,
     TResult? Function(String message)? database,
   }) {
     return unprocessableEntity?.call(message, errors);
@@ -361,7 +387,7 @@ class _$_UnprocessableEntity implements _UnprocessableEntity {
     TResult Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult Function(String message)? unAuthorized,
-    TResult Function()? network,
+    TResult Function(String message)? network,
     TResult Function(String message)? database,
     required TResult orElse(),
   }) {
@@ -417,18 +443,22 @@ abstract class _UnprocessableEntity implements ApiException {
       {required final String message,
       required final Map<String, dynamic> errors}) = _$_UnprocessableEntity;
 
+  @override
   String get message;
   Map<String, dynamic> get errors;
+  @override
   @JsonKey(ignore: true)
   _$$_UnprocessableEntityCopyWith<_$_UnprocessableEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_UnAuthorizedCopyWith<$Res> {
+abstract class _$$_UnAuthorizedCopyWith<$Res>
+    implements $ApiExceptionCopyWith<$Res> {
   factory _$$_UnAuthorizedCopyWith(
           _$_UnAuthorized value, $Res Function(_$_UnAuthorized) then) =
       __$$_UnAuthorizedCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({String message});
 }
@@ -492,7 +522,7 @@ class _$_UnAuthorized implements _UnAuthorized {
     required TResult Function(String message, Map<String, dynamic> errors)
         unprocessableEntity,
     required TResult Function(String message) unAuthorized,
-    required TResult Function() network,
+    required TResult Function(String message) network,
     required TResult Function(String message) database,
   }) {
     return unAuthorized(message);
@@ -505,7 +535,7 @@ class _$_UnAuthorized implements _UnAuthorized {
     TResult? Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult? Function(String message)? unAuthorized,
-    TResult? Function()? network,
+    TResult? Function(String message)? network,
     TResult? Function(String message)? database,
   }) {
     return unAuthorized?.call(message);
@@ -518,7 +548,7 @@ class _$_UnAuthorized implements _UnAuthorized {
     TResult Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult Function(String message)? unAuthorized,
-    TResult Function()? network,
+    TResult Function(String message)? network,
     TResult Function(String message)? database,
     required TResult orElse(),
   }) {
@@ -572,17 +602,23 @@ class _$_UnAuthorized implements _UnAuthorized {
 abstract class _UnAuthorized implements ApiException {
   const factory _UnAuthorized(final String message) = _$_UnAuthorized;
 
+  @override
   String get message;
+  @override
   @JsonKey(ignore: true)
   _$$_UnAuthorizedCopyWith<_$_UnAuthorized> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_NetworkCopyWith<$Res> {
+abstract class _$$_NetworkCopyWith<$Res>
+    implements $ApiExceptionCopyWith<$Res> {
   factory _$$_NetworkCopyWith(
           _$_Network value, $Res Function(_$_Network) then) =
       __$$_NetworkCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -591,26 +627,50 @@ class __$$_NetworkCopyWithImpl<$Res>
     implements _$$_NetworkCopyWith<$Res> {
   __$$_NetworkCopyWithImpl(_$_Network _value, $Res Function(_$_Network) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_Network(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Network implements _Network {
-  const _$_Network();
+  const _$_Network(this.message);
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'ApiException.network()';
+    return 'ApiException.network(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Network);
+        (other.runtimeType == runtimeType &&
+            other is _$_Network &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_NetworkCopyWith<_$_Network> get copyWith =>
+      __$$_NetworkCopyWithImpl<_$_Network>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -619,10 +679,10 @@ class _$_Network implements _Network {
     required TResult Function(String message, Map<String, dynamic> errors)
         unprocessableEntity,
     required TResult Function(String message) unAuthorized,
-    required TResult Function() network,
+    required TResult Function(String message) network,
     required TResult Function(String message) database,
   }) {
-    return network();
+    return network(message);
   }
 
   @override
@@ -632,10 +692,10 @@ class _$_Network implements _Network {
     TResult? Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult? Function(String message)? unAuthorized,
-    TResult? Function()? network,
+    TResult? Function(String message)? network,
     TResult? Function(String message)? database,
   }) {
-    return network?.call();
+    return network?.call(message);
   }
 
   @override
@@ -645,12 +705,12 @@ class _$_Network implements _Network {
     TResult Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult Function(String message)? unAuthorized,
-    TResult Function()? network,
+    TResult Function(String message)? network,
     TResult Function(String message)? database,
     required TResult orElse(),
   }) {
     if (network != null) {
-      return network();
+      return network(message);
     }
     return orElse();
   }
@@ -697,14 +757,23 @@ class _$_Network implements _Network {
 }
 
 abstract class _Network implements ApiException {
-  const factory _Network() = _$_Network;
+  const factory _Network(final String message) = _$_Network;
+
+  @override
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$_NetworkCopyWith<_$_Network> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_DatabaseCopyWith<$Res> {
+abstract class _$$_DatabaseCopyWith<$Res>
+    implements $ApiExceptionCopyWith<$Res> {
   factory _$$_DatabaseCopyWith(
           _$_Database value, $Res Function(_$_Database) then) =
       __$$_DatabaseCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({String message});
 }
@@ -768,7 +837,7 @@ class _$_Database implements _Database {
     required TResult Function(String message, Map<String, dynamic> errors)
         unprocessableEntity,
     required TResult Function(String message) unAuthorized,
-    required TResult Function() network,
+    required TResult Function(String message) network,
     required TResult Function(String message) database,
   }) {
     return database(message);
@@ -781,7 +850,7 @@ class _$_Database implements _Database {
     TResult? Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult? Function(String message)? unAuthorized,
-    TResult? Function()? network,
+    TResult? Function(String message)? network,
     TResult? Function(String message)? database,
   }) {
     return database?.call(message);
@@ -794,7 +863,7 @@ class _$_Database implements _Database {
     TResult Function(String message, Map<String, dynamic> errors)?
         unprocessableEntity,
     TResult Function(String message)? unAuthorized,
-    TResult Function()? network,
+    TResult Function(String message)? network,
     TResult Function(String message)? database,
     required TResult orElse(),
   }) {
@@ -848,7 +917,9 @@ class _$_Database implements _Database {
 abstract class _Database implements ApiException {
   const factory _Database({required final String message}) = _$_Database;
 
+  @override
   String get message;
+  @override
   @JsonKey(ignore: true)
   _$$_DatabaseCopyWith<_$_Database> get copyWith =>
       throw _privateConstructorUsedError;

@@ -29,10 +29,10 @@ extension ApiExceptionDioX on DioError {
           );
         }
       case DioErrorType.connectionTimeout:
-        return const ApiException.network();
+        return const ApiException.network('Connection timeout');
       case DioErrorType.unknown:
         if (error is SocketException) {
-          return const ApiException.network();
+          return const ApiException.network('No internet connection');
         } else {
           return ApiException.serverException(
             message: response?.data['data'] ?? message,

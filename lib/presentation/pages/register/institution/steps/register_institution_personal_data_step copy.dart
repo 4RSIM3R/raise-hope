@@ -61,6 +61,7 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'name',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.name,
             decoration: const InputDecoration(
               labelText: 'Name',
               hintText: 'Institution Name',
@@ -70,6 +71,7 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'email',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
               labelText: 'Email',
               hintText: 'example@gmail.com',
@@ -79,6 +81,7 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'phoneNumber',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
               labelText: 'Phone Number',
               hintText: 'Institution Phone Number',
@@ -88,6 +91,7 @@ class _RegisterVolunterPersonalDataStepState
           ReactiveTextField(
             formControlName: 'website',
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.url,
             decoration: const InputDecoration(
               labelText: 'Website',
               hintText: 'Institution Website',
@@ -96,7 +100,9 @@ class _RegisterVolunterPersonalDataStepState
           33.verticalSpace,
           ReactiveTextField(
             formControlName: 'password',
-            textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.done,
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
             decoration: const InputDecoration(
               labelText: 'Password',
               hintText: 'Password',
@@ -116,12 +122,10 @@ class _RegisterVolunterPersonalDataStepState
         Expanded(
           child: SizedBox(
             width: double.infinity,
-            child: ReactiveFormBuilder(
-              form: () => _form,
+            child: ReactiveFormConsumer(
               builder: (context, form, child) {
                 return FilledButton(
-                  // TODO: disable button when form is invalid
-                  onPressed: true ? () => _save().nextStep() : null,
+                  onPressed: form.valid ? () => _save().nextStep() : null,
                   child: const Text('Next'),
                 );
               },

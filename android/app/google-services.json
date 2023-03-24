@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "834108486797",
+    "project_id": "raise-hope",
+    "storage_bucket": "raise-hope.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834108486797:android:dedb9eb7a2a14453d29ec4",
+        "android_client_info": {
+          "package_name": "com.example.next_starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834108486797-c0neuq5467sfb604cfoanrkhe1d8p15c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-caWXay-kA_vkYhqcUPVto4FzEvbKIps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834108486797-c0neuq5467sfb604cfoanrkhe1d8p15c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "834108486797-n3jq32r2lrooddlmm1rqnq9elb3tf0be.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.examApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

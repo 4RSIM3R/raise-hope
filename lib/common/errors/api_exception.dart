@@ -19,7 +19,7 @@ class ApiException with _$ApiException implements Exception {
   const factory ApiException.unAuthorized(String message) = _UnAuthorized;
 
   // for socket exception from server
-  const factory ApiException.network() = _Network;
+  const factory ApiException.network(String message) = _Network;
 
   // for error from client
   const factory ApiException.database({
