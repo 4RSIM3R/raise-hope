@@ -1,58 +1,103 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:next_starter/common/extensions/extensions.dart';
+
+import 'custom_card.dart';
 
 class MissionCard extends StatelessWidget {
-  const MissionCard({super.key});
+  final String? heroTag;
+  final Function(String? heroTag)? onTap;
+
+  const MissionCard({
+    super.key,
+    this.heroTag,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(12),
-      width: MediaQuery.of(context).size.width - 16,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(color: Colors.grey[200]!, offset: Offset(3, 3), blurRadius: 5),
-        ],
-      ),
+    return CustomCard(
+      onTap: onTap != null ? () => onTap!(heroTag) : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: double.infinity,
-            height: 125,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
-          8.verticalSpace,
-          Text("Bantu Ilzam Mencari Jodoh", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          Text("WRI Foundation", style: TextStyle(fontSize: 14, color: Colors.grey)),
-          8.verticalSpace,
-          Row(
-            children: [
-              Expanded(
-                child: LinearProgressIndicator(
-                  value: 0.5,
-                  backgroundColor: Colors.grey[300],
-                  semanticsLabel: 'Linear progress indicator',
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final image = ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                  imageUrl: 'https://picsum.photos/seed/1/500/500',
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  height: 120,
+                  width: constraints.maxWidth,
+                  fit: BoxFit.cover,
                 ),
-              ),
-              12.horizontalSpace,
-              Text("50%", style: TextStyle(fontSize: 12, color: Colors.grey))
-            ],
+              );
+
+              if (heroTag != null) {
+                return Hero(
+                  tag: heroTag!,
+                  child: image,
+                  flightShuttleBuilder: (
+                    flightContext,
+                    animation,
+                    flightDirection,
+                    fromHeroContext,
+                    toHeroContext,
+                  ) =>
+                      (toHeroContext.widget as Hero).child,
+                );
+              }
+
+              return image;
+            },
           ),
-          8.verticalSpace,
-          Row(
-            children: [
-              Icon(CupertinoIcons.time, size: 16, color: Colors.grey),
-              2.horizontalSpace,
-              Text("12 Days Left", style: TextStyle(fontSize: 12, color: Colors.grey))
-            ],
-          )
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '5,81 km',
+                  style: context.textTheme.bodySmall!.apply(
+                    fontWeightDelta: 2,
+                    color: context.colorScheme.onSurface.withOpacity(0.5),
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  'Disaseter Earthquake Volunteer Needed!',
+                  style: context.textTheme.bodySmall!.apply(
+                    fontWeightDelta: 2,
+                    color: context.colorScheme.onSurface.withOpacity(0.8),
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icon/charity.svg',
+                      height: 12,
+                      width: 12,
+                    ),
+                    5.horizontalSpace,
+                    Text(
+                      '250+ Karma',
+                      style: context.textTheme.bodySmall!.copyWith(
+                        color:
+                            context.colorScheme.onBackground.withOpacity(0.6),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ).pad(10),
+          ),
         ],
       ),
     );

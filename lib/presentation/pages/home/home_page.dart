@@ -20,53 +20,29 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter.builder(
-        routes: const [
-          HomeMainRoute(),
-          HomeMissionRoute(),
-          HomeDiscussionRoute(),
-        ],
-        builder: (ctx, child, controller) {
-          return Scaffold(
-            backgroundColor: Colors.white,
-            key: _key,
-            appBar: AppBar(
-              backgroundColor: context.colorScheme.primary,
-              leading: IconButton(
-                onPressed: () {
-                  _key.currentState!.openDrawer();
-                },
-                icon: const Icon(Icons.menu, color: Colors.white),
-              ),
-              title: const Text("Raise Hope",
-                  style: TextStyle(color: Colors.white)),
-              centerTitle: true,
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.search, color: Colors.white),
-                )
-              ],
-            ),
-            drawer: const AppDrawer(),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: child[controller.activeIndex],
-              ),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: controller.activeIndex,
-              onTap: controller.setActiveIndex,
-              items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.book), label: "Mission"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.people), label: "Discussion"),
-              ],
-            ),
-          );
-        });
+      routes: const [
+        HomeMainRoute(),
+        HomeMissionRoute(),
+        HomeDiscussionRoute(),
+      ],
+      builder: (ctx, child, controller) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          key: _key,
+          body: child[controller.activeIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: controller.activeIndex,
+            onTap: controller.setActiveIndex,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+              BottomNavigationBarItem(icon: Icon(Icons.book), label: "Mission"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.people), label: "Discussion"),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
