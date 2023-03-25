@@ -1,135 +1,432 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:next_starter/injection.dart';
-import 'package:next_starter/presentation/components/card/mission_card.dart';
-import 'package:next_starter/presentation/routes/app_router.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:next_starter/common/enums/type_of_help.dart';
+import 'package:next_starter/common/extensions/extensions.dart';
+import 'package:next_starter/presentation/components/card/custom_card.dart';
+import 'package:next_starter/presentation/components/progress_bar/rounded_progress_bar.dart';
+import 'package:next_starter/presentation/pages/home/home_page.dart';
 
-class HomeMainPage extends StatelessWidget {
+class HomeMainPage extends StatefulWidget {
   const HomeMainPage({super.key});
 
   @override
+  State<HomeMainPage> createState() => _HomeMainPageState();
+}
+
+class _HomeMainPageState extends State<HomeMainPage> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () {
-            locator<AppRouter>().push(const KarmaMainRoute());
-          },
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey[200]!,
-                    offset: const Offset(3, 3),
-                    blurRadius: 5),
-              ],
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            locator<FirebaseAuth>().currentUser?.displayName ??
-                                "",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            locator<FirebaseAuth>().currentUser?.email ?? "",
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Icon(CupertinoIcons.heart_fill, color: Colors.blue)
-                  ],
-                ),
-                12.verticalSpace,
-                LinearProgressIndicator(
-                  value: 0.5,
-                  backgroundColor: Colors.grey[300],
-                  semanticsLabel: 'Linear progress indicator',
-                ),
-                12.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text("50 Karma", style: TextStyle(color: Colors.blue)),
-                    Text("100"),
-                  ],
-                ),
-                8.verticalSpace,
-                Divider(color: Colors.grey[300]),
-                8.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("2 Missions"),
-                        Text("On Going!"),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("2 Missions"),
-                        Text("On Going!"),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("2 Missions"),
-                        Text("On Going!"),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
+    return Scaffold(
+      key: _key,
+      // appBar: AppBar(
+      //   backgroundColor: context.colorScheme.primary,
+      //   leading: IconButton(
+      //     onPressed: () {
+      //       _key.currentState?.openDrawer();
+      //     },
+      //     icon: const Icon(Icons.menu, color: Colors.white),
+      //   ),
+      //   title: const Text("Raise Hope", style: TextStyle(color: Colors.white)),
+      //   centerTitle: true,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.search, color: Colors.white),
+      //     )
+      //   ],
+      // ),
+      drawer: const AppDrawer(),
+      body: CustomScrollView(
+        slivers: [
+          _buildAppBar(),
+          _buildKarmaProgress(),
+          _buildMissionStats(),
+          _buildSectionTitle(title: 'For You'),
+          _buildFilter(),
+          _buildVerticalSpacer(),
+          _buildMissionList(),
+          _buildSectionTitle(title: 'Popular Mission'),
+          _buildFilter(),
+          _buildVerticalSpacer(),
+          _buildMissionList(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMissionList() {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 210,
+        child: ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          scrollDirection: Axis.horizontal,
+          itemCount: 10,
+          itemBuilder: (context, index) => const SizedBox(
+            width: 160,
+            child: MissionCard(),
           ),
+          separatorBuilder: (_, __) => 16.horizontalSpace,
         ),
-        24.verticalSpace,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text("For You",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-            Text("See All", style: TextStyle(fontSize: 14, color: Colors.blue)),
+      ),
+    );
+  }
+
+  Widget _buildFilter() {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 32,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: TypeOfHelp.values.length,
+          itemBuilder: (context, index) {
+            final isSelected = index == 0;
+
+            return Chip(
+              label: Text(TypeOfHelp.values[index].name),
+              // material 2 style
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999),
+              ),
+
+              side: BorderSide(
+                color: isSelected
+                    ? context.colorScheme.primary
+                    : context.colorScheme.onBackground.withOpacity(0.2),
+              ),
+              backgroundColor: isSelected
+                  ? context.colorScheme.primary
+                  : context.colorScheme.background,
+              labelStyle: context.textTheme.bodySmall!.copyWith(
+                color: isSelected
+                    ? context.colorScheme.onPrimary
+                    : context.colorScheme.primary,
+                fontWeight: FontWeight.w700,
+              ),
+            );
+          },
+          separatorBuilder: (_, __) => 10.horizontalSpace,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle({
+    required String title,
+    VoidCallback? onPressed,
+  }) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      sliver: SliverToBoxAdapter(
+        child: Row(
+          children: [
+            Text(
+              title,
+              style: context.textTheme.titleSmall!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colorScheme.onBackground.withOpacity(0.8),
+              ),
+            ),
+            const Spacer(),
+            TextButton(
+              onPressed: onPressed,
+              child: Text(
+                'See All',
+                style: context.textTheme.bodyMedium!.copyWith(
+                  color: context.colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ],
         ),
-        12.verticalSpace,
-        SizedBox(
-          height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [1, 2, 3, 4, 5]
-                .map(
-                  (e) => Container(
-                    margin: const EdgeInsets.only(right: 8),
-                    child: const Chip(label: Text("Category")),
-                  ),
-                )
-                .toList(),
+      ),
+    );
+  }
+
+  _buildMissionStats() {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      sliver: SliverToBoxAdapter(
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: _buildMissionCard(
+                  value: 1,
+                  title: 'Mission',
+                  subtitle: 'On Going!',
+                  color: context.colorScheme.primary,
+                ),
+              ),
+              16.horizontalSpace,
+              Expanded(
+                child: _buildMissionCard(
+                  value: 5,
+                  title: 'Area',
+                  subtitle: 'You\'ve helped!',
+                  color: const Color(0xFFF19700),
+                ),
+              ),
+              16.horizontalSpace,
+              Expanded(
+                child: _buildMissionCard(
+                  value: 7,
+                  title: 'Mission Plan',
+                  subtitle: 'Planned!',
+                  color: const Color(0xFF006E1C),
+                ),
+              ),
+            ],
           ),
         ),
-        12.verticalSpace,
-        const MissionCard(),
+      ),
+    );
+  }
+
+  Widget _buildKarmaProgress() {
+    return SliverPadding(
+      padding: const EdgeInsets.all(16),
+      sliver: SliverToBoxAdapter(
+        child: CustomCard(
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                'assets/icon/charity.svg',
+                width: 24,
+                height: 24,
+              ).pad(17),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '350 karma more for rewards',
+                        style: context.textTheme.labelSmall!.apply(
+                          fontWeightDelta: 2,
+                        ),
+                      ),
+                      4.verticalSpace,
+                      const RoundedLinearProgressBar(
+                        value: 0.3,
+                        color: Color(0xFFFF8985),
+                        bgColor: Colors.transparent,
+                      ),
+                      4.verticalSpace,
+                      Text(
+                        'Karma Level 3',
+                        style: context.textTheme.labelSmall!.apply(
+                          fontWeightDelta: 2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAppBar() {
+    return SliverAppBar(
+      centerTitle: true,
+      title: const Text(
+        'Raise Hope',
+        style: TextStyle(color: Colors.white),
+      ),
+      expandedHeight: 180,
+      backgroundColor: context.colorScheme.primary,
+      leading: IconButton(
+        onPressed: () {
+          _key.currentState?.openDrawer();
+        },
+        icon: Icon(Icons.menu, color: context.colorScheme.onPrimary),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.notifications_rounded,
+              color: context.colorScheme.onPrimary),
+        )
       ],
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.parallax,
+        centerTitle: true,
+        expandedTitleScale: 1,
+        titlePadding: const EdgeInsets.only(left: 16, right: 16, bottom: 48),
+        background: Stack(
+          children: const [
+            Positioned.fill(
+              child: Image(
+                image: AssetImage('assets/images/home_app_bar_bg.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 48,
+              child: SizedBox(
+                height: 44,
+                child: TextField(
+                  style: TextStyle(color: Colors.black45, fontSize: 14),
+                  decoration: InputDecoration(
+                    hintText: 'Search new mission...',
+                    prefixIcon: Icon(Icons.search, color: Colors.black54),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(22)),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMissionCard({
+    required int value,
+    required String title,
+    required String subtitle,
+    required Color color,
+  }) {
+    return CustomCard(
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              value.toString(),
+              style: context.textTheme.labelLarge!.apply(
+                fontWeightDelta: 2,
+              ),
+            ),
+            4.verticalSpace,
+            Text(
+              title,
+              style: context.textTheme.labelSmall!.apply(
+                fontWeightDelta: 2,
+              ),
+            ),
+            4.verticalSpace,
+            Text(
+              subtitle,
+              style: context.textTheme.labelSmall!.apply(
+                fontWeightDelta: 2,
+                color: context.colorScheme.onSurface.withOpacity(0.6),
+              ),
+            ),
+            8.verticalSpace,
+            // make sure to use intrinsic height
+            const Spacer(),
+            Container(
+              width: double.infinity,
+              height: 4,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVerticalSpacer([int height = 20]) {
+    return SliverToBoxAdapter(
+      child: height.verticalSpace,
+    );
+  }
+}
+
+class MissionCard extends StatelessWidget {
+  const MissionCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) => ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                imageUrl: 'https://picsum.photos/200/300',
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                height: 120,
+                width: constraints.maxWidth,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '5,81 km',
+                  style: context.textTheme.bodySmall!.apply(
+                    fontWeightDelta: 2,
+                    color: context.colorScheme.onSurface.withOpacity(0.5),
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  'Disaseter Earthquake Volunteer Needed!',
+                  style: context.textTheme.bodySmall!.apply(
+                    fontWeightDelta: 2,
+                    color: context.colorScheme.onSurface.withOpacity(0.8),
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icon/charity.svg',
+                      height: 12,
+                      width: 12,
+                    ),
+                    5.horizontalSpace,
+                    Text(
+                      '250+ Karma',
+                      style: context.textTheme.bodySmall!.copyWith(
+                        color:
+                            context.colorScheme.onBackground.withOpacity(0.6),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ).pad(10),
+          ),
+        ],
+      ),
     );
   }
 }
