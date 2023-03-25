@@ -9,7 +9,6 @@ import 'package:next_starter/common/extensions/extensions.dart';
 import 'package:next_starter/presentation/components/card/custom_card.dart';
 import 'package:next_starter/presentation/components/card/mission_card.dart';
 import 'package:next_starter/presentation/components/progress_bar/rounded_progress_bar.dart';
-import 'package:next_starter/presentation/pages/home/home_page.dart';
 
 import '../../routes/app_router.dart';
 
@@ -21,13 +20,9 @@ class HomeDashboardPage extends StatefulWidget {
 }
 
 class _HomeDashboardPageState extends State<HomeDashboardPage> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _key,
-      drawer: const AppDrawer(),
       body: CustomScrollView(
         slivers: [
           _buildAppBar(),
@@ -250,7 +245,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
       backgroundColor: context.colorScheme.primary,
       leading: IconButton(
         onPressed: () {
-          _key.currentState?.openDrawer();
+          Scaffold.of(context).openDrawer();
         },
         icon: Icon(Icons.menu, color: context.colorScheme.onPrimary),
       ),
