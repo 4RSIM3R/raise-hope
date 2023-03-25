@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:next_starter/presentation/layouts/home/home_discussion_page.dart';
 import 'package:next_starter/presentation/layouts/home/home_main_page.dart';
 import 'package:next_starter/presentation/layouts/home/home_mission_page.dart';
+import 'package:next_starter/presentation/pages/discussion/chat_list_page.dart';
+import 'package:next_starter/presentation/pages/discussion/chat_page.dart';
 import 'package:next_starter/presentation/pages/hero_empty_router_page.dart';
 import 'package:next_starter/presentation/pages/home/home_page.dart';
 import 'package:next_starter/presentation/pages/karma/main/karma_main_page.dart';
@@ -40,12 +41,19 @@ part 'app_router.gr.dart';
           ],
         ),
         AutoRoute(page: HomeMissionPage),
-        AutoRoute(page: HomeDiscussionPage),
+        AutoRoute(
+          page: HeroEmptyRouterPage,
+          name: 'HomeDiscussionRoute',
+          children: [
+            AutoRoute(page: ChatListPage, initial: true),
+          ],
+        ),
       ],
     ),
     AutoRoute(page: LoginPage),
     AutoRoute(page: KarmaMainPage),
     AutoRoute(page: ProfilePage),
+    AutoRoute(page: ChatPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
