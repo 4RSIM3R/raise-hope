@@ -24,6 +24,7 @@ class AppDrawer extends StatelessWidget {
       child: Drawer(
         width: context.width,
         backgroundColor: context.colorScheme.background,
+        surfaceTintColor: Colors.transparent,
         shape: const RoundedRectangleBorder(),
         child: CustomScrollView(
           slivers: [
@@ -84,9 +85,11 @@ class AppDrawer extends StatelessWidget {
               delegate: SliverChildListDelegate(
                 [
                   24.verticalSpace,
-                  const DrawerListItem(
+                  DrawerListItem(
                     label: 'Account',
                     icon: Icons.person_outline_rounded,
+                    onTap: () =>
+                        locator<AppRouter>().push(const ProfileRoute()),
                   ),
                   const DrawerListItem(
                     label: 'Request Help',

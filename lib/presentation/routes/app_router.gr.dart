@@ -75,6 +75,12 @@ class _$AppRouter extends RootStackRouter {
         child: const KarmaMainPage(),
       );
     },
+    ProfileRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ProfilePage(),
+      );
+    },
     HomeMainRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -174,6 +180,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           KarmaMainRoute.name,
           path: '/karma-main-page',
+        ),
+        RouteConfig(
+          ProfileRoute.name,
+          path: '/profile-page',
         ),
       ];
 }
@@ -318,6 +328,18 @@ class KarmaMainRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'KarmaMainRoute';
+}
+
+/// generated route for
+/// [ProfilePage]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute()
+      : super(
+          ProfileRoute.name,
+          path: '/profile-page',
+        );
+
+  static const String name = 'ProfileRoute';
 }
 
 /// generated route for
