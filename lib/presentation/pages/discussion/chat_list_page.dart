@@ -35,6 +35,7 @@ class _ChatListPageState extends State<ChatListPage> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 10,
               itemBuilder: (context, index) => ChatTile(
+                hasUnread: index % 2 == 0,
                 onTap: () => locator<AppRouter>().push(const ChatRoute()),
               ),
             ),
