@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:loop_page_view/loop_page_view.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
@@ -70,20 +71,23 @@ class _ImageCarouselState extends State<ImageCarousel> {
           bottom: 16,
           left: 0,
           right: 0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              _images.length,
-              (index) => AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                height: 8,
-                width: 8,
-                decoration: BoxDecoration(
-                  color: _currentPage == index
-                      ? context.colorScheme.primary
-                      : context.colorScheme.background,
-                  borderRadius: BorderRadius.circular(4),
+          child: Entry.offset(
+            delay: 300.milliseconds,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _images.length,
+                (index) => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  height: 8,
+                  width: 8,
+                  decoration: BoxDecoration(
+                    color: _currentPage == index
+                        ? context.colorScheme.primary
+                        : context.colorScheme.background,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                 ),
               ),
             ),

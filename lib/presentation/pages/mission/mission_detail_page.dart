@@ -1,5 +1,6 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
 import 'package:next_starter/presentation/components/buttons/box_icon_button.dart';
@@ -36,16 +37,25 @@ class _MissionDetailPageState extends State<MissionDetailPage> {
               padding: const EdgeInsets.symmetric(horizontal: 22) +
                   const EdgeInsets.only(bottom: 22),
               child: SafeArea(
-                child: Row(
-                  children: const [
-                    BoxIconButton(
-                      icon: Icon(Icons.arrow_back_rounded),
-                    ),
-                    Spacer(),
-                    BoxIconButton(
-                      icon: Icon(Icons.share_rounded),
-                    ),
-                  ],
+                child: Entry.opacity(
+                  delay: 300.milliseconds,
+                  child: Row(
+                    children: [
+                      Entry.scale(
+                        delay: 100.milliseconds,
+                        child: const BoxIconButton(
+                          icon: Icon(Icons.arrow_back_rounded),
+                        ),
+                      ),
+                      const Spacer(),
+                      Entry.scale(
+                        delay: 100.milliseconds,
+                        child: const BoxIconButton(
+                          icon: Icon(Icons.share_rounded),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

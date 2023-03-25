@@ -41,6 +41,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
           _buildFilter(),
           _buildVerticalSpacer(),
           _buildMissionList(),
+          _buildVerticalSpacer(),
         ],
       ),
     );
@@ -238,9 +239,12 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
   Widget _buildAppBar() {
     return SliverAppBar(
       centerTitle: true,
-      title: const Text(
+      title: Text(
         'Raise Hope',
-        style: TextStyle(color: Colors.white),
+        style: context.textTheme.titleLarge!.copyWith(
+          color: context.colorScheme.onPrimary,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       expandedHeight: 180,
       backgroundColor: context.colorScheme.primary,
