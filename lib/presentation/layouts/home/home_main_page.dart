@@ -1,44 +1,32 @@
+import 'dart:math';
+
 import 'package:adaptive_sizer/adaptive_sizer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:next_starter/common/enums/type_of_help.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
 import 'package:next_starter/presentation/components/card/custom_card.dart';
+import 'package:next_starter/presentation/components/card/mission_card.dart';
 import 'package:next_starter/presentation/components/progress_bar/rounded_progress_bar.dart';
 import 'package:next_starter/presentation/pages/home/home_page.dart';
 
-class HomeMainPage extends StatefulWidget {
-  const HomeMainPage({super.key});
+import '../../routes/app_router.dart';
+
+class HomeDashboardPage extends StatefulWidget {
+  const HomeDashboardPage({super.key});
 
   @override
-  State<HomeMainPage> createState() => _HomeMainPageState();
+  State<HomeDashboardPage> createState() => _HomeDashboardPageState();
 }
 
-class _HomeMainPageState extends State<HomeMainPage> {
+class _HomeDashboardPageState extends State<HomeDashboardPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _key,
-      // appBar: AppBar(
-      //   backgroundColor: context.colorScheme.primary,
-      //   leading: IconButton(
-      //     onPressed: () {
-      //       _key.currentState?.openDrawer();
-      //     },
-      //     icon: const Icon(Icons.menu, color: Colors.white),
-      //   ),
-      //   title: const Text("Raise Hope", style: TextStyle(color: Colors.white)),
-      //   centerTitle: true,
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.search, color: Colors.white),
-      //     )
-      //   ],
-      // ),
       drawer: const AppDrawer(),
       body: CustomScrollView(
         slivers: [
@@ -66,9 +54,18 @@ class _HomeMainPageState extends State<HomeMainPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           itemCount: 10,
-          itemBuilder: (context, index) => const SizedBox(
+          itemBuilder: (context, index) => SizedBox(
             width: 160,
-            child: MissionCard(),
+            child: MissionCard(
+              heroTag: 'mission_${index}_${Random().nextInt(10000)}',
+              onTap: (tag) {
+                context.pushRoute(
+                  MissionDetailRoute(
+                    heroTag: tag,
+                  ),
+                );
+              },
+            ),
           ),
           separatorBuilder: (_, __) => 16.horizontalSpace,
         ),
@@ -354,79 +351,6 @@ class _HomeMainPageState extends State<HomeMainPage> {
   Widget _buildVerticalSpacer([int height = 20]) {
     return SliverToBoxAdapter(
       child: height.verticalSpace,
-    );
-  }
-}
-
-class MissionCard extends StatelessWidget {
-  const MissionCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          LayoutBuilder(
-            builder: (context, constraints) => ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: CachedNetworkImage(
-                imageUrl: 'https://picsum.photos/200/300',
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                height: 120,
-                width: constraints.maxWidth,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '5,81 km',
-                  style: context.textTheme.bodySmall!.apply(
-                    fontWeightDelta: 2,
-                    color: context.colorScheme.onSurface.withOpacity(0.5),
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  'Disaseter Earthquake Volunteer Needed!',
-                  style: context.textTheme.bodySmall!.apply(
-                    fontWeightDelta: 2,
-                    color: context.colorScheme.onSurface.withOpacity(0.8),
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const Spacer(),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icon/charity.svg',
-                      height: 12,
-                      width: 12,
-                    ),
-                    5.horizontalSpace,
-                    Text(
-                      '250+ Karma',
-                      style: context.textTheme.bodySmall!.copyWith(
-                        color:
-                            context.colorScheme.onBackground.withOpacity(0.6),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ).pad(10),
-          ),
-        ],
-      ),
     );
   }
 }

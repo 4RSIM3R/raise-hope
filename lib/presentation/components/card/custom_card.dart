@@ -3,18 +3,18 @@ import 'package:next_starter/common/extensions/extensions.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
+  final VoidCallback? onTap;
 
   const CustomCard({
     super.key,
     required this.child,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           // box-shadow: 0px 2px 5px 2px #0000000D;
           BoxShadow(
@@ -24,7 +24,15 @@ class CustomCard extends StatelessWidget {
           ),
         ],
       ),
-      child: child,
+      child: Material(
+        color: context.colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: child,
+        ),
+      ),
     );
   }
 }

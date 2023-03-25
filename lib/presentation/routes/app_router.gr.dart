@@ -78,7 +78,7 @@ class _$AppRouter extends RootStackRouter {
     HomeMainRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const HomeMainPage(),
+        child: const HeroEmptyRouterPage(),
       );
     },
     HomeMissionRoute.name: (routeData) {
@@ -91,6 +91,23 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const HomeDiscussionPage(),
+      );
+    },
+    HomeDashboardRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const HomeDashboardPage(),
+      );
+    },
+    MissionDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<MissionDetailRouteArgs>(
+          orElse: () => const MissionDetailRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: MissionDetailPage(
+          key: args.key,
+          heroTag: args.heroTag,
+        ),
       );
     },
   };
@@ -125,6 +142,18 @@ class _$AppRouter extends RootStackRouter {
               HomeMainRoute.name,
               path: '',
               parent: HomeRoute.name,
+              children: [
+                RouteConfig(
+                  HomeDashboardRoute.name,
+                  path: '',
+                  parent: HomeMainRoute.name,
+                ),
+                RouteConfig(
+                  MissionDetailRoute.name,
+                  path: 'mission-detail-page',
+                  parent: HomeMainRoute.name,
+                ),
+              ],
             ),
             RouteConfig(
               HomeMissionRoute.name,
@@ -292,12 +321,13 @@ class KarmaMainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [HomeMainPage]
+/// [HeroEmptyRouterPage]
 class HomeMainRoute extends PageRouteInfo<void> {
-  const HomeMainRoute()
+  const HomeMainRoute({List<PageRouteInfo>? children})
       : super(
           HomeMainRoute.name,
           path: '',
+          initialChildren: children,
         );
 
   static const String name = 'HomeMainRoute';
@@ -325,4 +355,50 @@ class HomeDiscussionRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeDiscussionRoute';
+}
+
+/// generated route for
+/// [HomeDashboardPage]
+class HomeDashboardRoute extends PageRouteInfo<void> {
+  const HomeDashboardRoute()
+      : super(
+          HomeDashboardRoute.name,
+          path: '',
+        );
+
+  static const String name = 'HomeDashboardRoute';
+}
+
+/// generated route for
+/// [MissionDetailPage]
+class MissionDetailRoute extends PageRouteInfo<MissionDetailRouteArgs> {
+  MissionDetailRoute({
+    Key? key,
+    String? heroTag,
+  }) : super(
+          MissionDetailRoute.name,
+          path: 'mission-detail-page',
+          args: MissionDetailRouteArgs(
+            key: key,
+            heroTag: heroTag,
+          ),
+        );
+
+  static const String name = 'MissionDetailRoute';
+}
+
+class MissionDetailRouteArgs {
+  const MissionDetailRouteArgs({
+    this.key,
+    this.heroTag,
+  });
+
+  final Key? key;
+
+  final String? heroTag;
+
+  @override
+  String toString() {
+    return 'MissionDetailRouteArgs{key: $key, heroTag: $heroTag}';
+  }
 }
