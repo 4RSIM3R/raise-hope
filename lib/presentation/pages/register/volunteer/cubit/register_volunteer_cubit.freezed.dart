@@ -560,7 +560,9 @@ mixin _$RegisterVolunteerData {
   String? get password => throw _privateConstructorUsedError;
   List<int>? get daysOfWeekAvailable => throw _privateConstructorUsedError;
   List<NameOfTimeDay>? get preferedTime => throw _privateConstructorUsedError;
-  List<String>? get interest => throw _privateConstructorUsedError;
+  List<String>? get interest =>
+      throw _privateConstructorUsedError; // register with current user (from google, etc)
+  bool get isUsingCurrentUser => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RegisterVolunteerDataCopyWith<RegisterVolunteerData> get copyWith =>
@@ -581,7 +583,8 @@ abstract class $RegisterVolunteerDataCopyWith<$Res> {
       String? password,
       List<int>? daysOfWeekAvailable,
       List<NameOfTimeDay>? preferedTime,
-      List<String>? interest});
+      List<String>? interest,
+      bool isUsingCurrentUser});
 }
 
 /// @nodoc
@@ -606,6 +609,7 @@ class _$RegisterVolunteerDataCopyWithImpl<$Res,
     Object? daysOfWeekAvailable = freezed,
     Object? preferedTime = freezed,
     Object? interest = freezed,
+    Object? isUsingCurrentUser = null,
   }) {
     return _then(_value.copyWith(
       fullName: freezed == fullName
@@ -640,6 +644,10 @@ class _$RegisterVolunteerDataCopyWithImpl<$Res,
           ? _value.interest
           : interest // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      isUsingCurrentUser: null == isUsingCurrentUser
+          ? _value.isUsingCurrentUser
+          : isUsingCurrentUser // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -660,7 +668,8 @@ abstract class _$$_RegisterVolunteerDataCopyWith<$Res>
       String? password,
       List<int>? daysOfWeekAvailable,
       List<NameOfTimeDay>? preferedTime,
-      List<String>? interest});
+      List<String>? interest,
+      bool isUsingCurrentUser});
 }
 
 /// @nodoc
@@ -682,6 +691,7 @@ class __$$_RegisterVolunteerDataCopyWithImpl<$Res>
     Object? daysOfWeekAvailable = freezed,
     Object? preferedTime = freezed,
     Object? interest = freezed,
+    Object? isUsingCurrentUser = null,
   }) {
     return _then(_$_RegisterVolunteerData(
       fullName: freezed == fullName
@@ -716,6 +726,10 @@ class __$$_RegisterVolunteerDataCopyWithImpl<$Res>
           ? _value._interest
           : interest // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      isUsingCurrentUser: null == isUsingCurrentUser
+          ? _value.isUsingCurrentUser
+          : isUsingCurrentUser // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -731,7 +745,8 @@ class _$_RegisterVolunteerData implements _RegisterVolunteerData {
       this.password,
       final List<int>? daysOfWeekAvailable,
       final List<NameOfTimeDay>? preferedTime,
-      final List<String>? interest})
+      final List<String>? interest,
+      this.isUsingCurrentUser = false})
       : _daysOfWeekAvailable = daysOfWeekAvailable,
         _preferedTime = preferedTime,
         _interest = interest;
@@ -777,9 +792,14 @@ class _$_RegisterVolunteerData implements _RegisterVolunteerData {
     return EqualUnmodifiableListView(value);
   }
 
+// register with current user (from google, etc)
+  @override
+  @JsonKey()
+  final bool isUsingCurrentUser;
+
   @override
   String toString() {
-    return 'RegisterVolunteerData(fullName: $fullName, email: $email, phoneNumber: $phoneNumber, address: $address, password: $password, daysOfWeekAvailable: $daysOfWeekAvailable, preferedTime: $preferedTime, interest: $interest)';
+    return 'RegisterVolunteerData(fullName: $fullName, email: $email, phoneNumber: $phoneNumber, address: $address, password: $password, daysOfWeekAvailable: $daysOfWeekAvailable, preferedTime: $preferedTime, interest: $interest, isUsingCurrentUser: $isUsingCurrentUser)';
   }
 
   @override
@@ -799,7 +819,9 @@ class _$_RegisterVolunteerData implements _RegisterVolunteerData {
                 .equals(other._daysOfWeekAvailable, _daysOfWeekAvailable) &&
             const DeepCollectionEquality()
                 .equals(other._preferedTime, _preferedTime) &&
-            const DeepCollectionEquality().equals(other._interest, _interest));
+            const DeepCollectionEquality().equals(other._interest, _interest) &&
+            (identical(other.isUsingCurrentUser, isUsingCurrentUser) ||
+                other.isUsingCurrentUser == isUsingCurrentUser));
   }
 
   @override
@@ -812,7 +834,8 @@ class _$_RegisterVolunteerData implements _RegisterVolunteerData {
       password,
       const DeepCollectionEquality().hash(_daysOfWeekAvailable),
       const DeepCollectionEquality().hash(_preferedTime),
-      const DeepCollectionEquality().hash(_interest));
+      const DeepCollectionEquality().hash(_interest),
+      isUsingCurrentUser);
 
   @JsonKey(ignore: true)
   @override
@@ -831,7 +854,8 @@ abstract class _RegisterVolunteerData implements RegisterVolunteerData {
       final String? password,
       final List<int>? daysOfWeekAvailable,
       final List<NameOfTimeDay>? preferedTime,
-      final List<String>? interest}) = _$_RegisterVolunteerData;
+      final List<String>? interest,
+      final bool isUsingCurrentUser}) = _$_RegisterVolunteerData;
 
   @override
   String? get fullName;
@@ -849,6 +873,8 @@ abstract class _RegisterVolunteerData implements RegisterVolunteerData {
   List<NameOfTimeDay>? get preferedTime;
   @override
   List<String>? get interest;
+  @override // register with current user (from google, etc)
+  bool get isUsingCurrentUser;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterVolunteerDataCopyWith<_$_RegisterVolunteerData> get copyWith =>

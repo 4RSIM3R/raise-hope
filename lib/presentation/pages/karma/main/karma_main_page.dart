@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:next_starter/presentation/components/card/karma_card.dart';
+import 'package:next_starter/presentation/components/card/karma_points_card.dart';
 
 class KarmaMainPage extends StatelessWidget {
   const KarmaMainPage({super.key});
@@ -9,15 +9,15 @@ class KarmaMainPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Karma Level"),
+        title: const Text("Karma Level"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           child: Column(
-            children: [
-              KarmaCard(),
+            children: const [
+              KarmaPointsCard(),
             ],
           ),
         ),

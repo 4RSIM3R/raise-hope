@@ -1,6 +1,8 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
 import 'package:next_starter/injection.dart';
 import 'package:next_starter/presentation/routes/app_router.dart';
@@ -34,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isPasswordVisible = false;
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -167,8 +170,17 @@ class _LoginPageState extends State<LoginPage> {
                       color: context.colorScheme.primary,
                     ),
                   ),
-                  onPressed: () {},
-                  child: Row(
+                  onPressed: _registerOrLoginWithGoogle,
+                  child: _isGoogleLoading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: context.colorScheme.onPrimary,
+                          ),
+                        )
+                      : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
@@ -192,10 +204,10 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text("Register Now"),
                     onPressed: () {
                       final destination = widget.isInstitution
-                          ? const RegisterInstitutionRoute()
-                          : const RegisterVolunteerRoute();
+                          ? RegisterInstitutionRoute()
+                          : RegisterVolunteerRoute();
 
-                      locator<AppRouter>().push(destination);
+                      locator<AppRouter>().push(destination as PageRouteInfo);
                     },
                   ),
                 ],
@@ -240,5 +252,57 @@ class _LoginPageState extends State<LoginPage> {
     } finally {
       setState(() => _isLoading = false);
     }
+  }
+
+  Future<void> _registerOrLoginWithGoogle() async {
+    setState(() => _isGoogleLoading = true);
+    final auth = locator<FirebaseAuth>();
+    final router = locator<AppRouter>();
+    final googleSignIn = locator<GoogleSignIn>();
+
+    // try login with google first
+    try {
+      await googleSignIn.signOut();
+
+      final googleUser = await googleSignIn.signIn();
+      final googleAuth = await googleUser!.authentication;
+      final idToken = googleAuth.idToken;
+
+      final result = await auth.signInWithCredential(
+        GoogleAuthProvider.credential(
+          idToken: idToken,
+        ),
+      );
+
+      // role itu diset di endpoint registrasi, kalau gapunya berarti dia pernah cancel registrasi
+      final token = await result.user!.getIdTokenResult();
+      final role = token.claims?['role'] as String?;
+
+      if (role == null || role.isEmpty) {
+        _registerWithCurrentUser();
+      } else {
+        router.replace(const HomeRoute());
+      }
+    } on FirebaseAuthException catch (e) {
+      context.showSnackbar(
+        title: 'Whoops!',
+        message: e.message ?? 'Something went wrong.',
+      );
+    } on Exception catch (e) {
+      context.showSnackbar(
+        title: 'Whoops!',
+        message: e.toString(),
+      );
+    } finally {
+      setState(() => _isGoogleLoading = false);
+    }
+  }
+
+  Future<void> _registerWithCurrentUser() async {
+    final destination = widget.isInstitution
+        ? RegisterInstitutionRoute(isUsingCurrentUser: true)
+        : RegisterVolunteerRoute(isUsingCurrentUser: true);
+
+    locator<AppRouter>().push(destination as PageRouteInfo);
   }
 }

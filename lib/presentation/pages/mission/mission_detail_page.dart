@@ -1,4 +1,5 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +44,9 @@ class _MissionDetailPageState extends State<MissionDetailPage> {
                     children: [
                       Entry.scale(
                         delay: 100.milliseconds,
-                        child: const BoxIconButton(
-                          icon: Icon(Icons.arrow_back_rounded),
+                        child: BoxIconButton(
+                          icon: const Icon(Icons.arrow_back_rounded),
+                          onTap: () => context.popRoute(),
                         ),
                       ),
                       const Spacer(),

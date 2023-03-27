@@ -12,7 +12,12 @@ import 'package:next_starter/presentation/pages/register/volunteer/steps/registe
 import 'cubit/register_volunteer_cubit.dart';
 
 class RegisterVolunteerPage extends StatefulWidget {
-  const RegisterVolunteerPage({super.key});
+  final bool isUsingCurrentUser;
+
+  const RegisterVolunteerPage({
+    super.key,
+    this.isUsingCurrentUser = false,
+  });
 
   @override
   State<RegisterVolunteerPage> createState() => _RegisterVolunteerPageState();
@@ -47,7 +52,15 @@ class _RegisterVolunteerPageState extends State<RegisterVolunteerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => locator<RegisterVolunteerCubit>(),
+        create: (context) {
+          final cubit = locator<RegisterVolunteerCubit>();
+
+          if (widget.isUsingCurrentUser) {
+            cubit.initializeWithCurrentUser();
+          }
+
+          return cubit;
+        },
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [

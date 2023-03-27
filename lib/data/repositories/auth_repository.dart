@@ -46,7 +46,6 @@ class AuthRepository {
         return left(const ApiException.unAuthorized('Invalid token'));
       }
     } on Exception catch (e) {
-      rethrow;
       return left(ApiException.unAuthorized(e.toString()));
     }
   }
@@ -87,6 +86,75 @@ class AuthRepository {
       } else {
         return left(const ApiException.unAuthorized('Invalid token'));
       }
+    } on Exception catch (e) {
+      return left(ApiException.unAuthorized(e.toString()));
+    }
+  }
+
+  Future<Either<ApiException, Unit>> registerVolunteerWithCurrentUser(
+    RegisterVolunteerData data,
+  ) async {
+    try {
+      final callable =
+          _functions.httpsCallable('registerVolunteerWithCurrentUser');
+
+      final payload = {
+        'name': data.fullName,
+        'email': data.email,
+        'phone': data.phoneNumber,
+        'address': data.address,
+        'availability': data.daysOfWeekAvailable!.toList(),
+        'preferedTime': data.preferedTime!.map((e) => e.name).toList(),
+        'interests': data.interest!.toList(),
+      };
+
+      final result = await callable.call(payload);
+
+      if (result.data['error'] != null) {
+        return left(ApiException.unAuthorized(result.data['error']));
+      }
+
+      // refresh auth token to get the latest claims (role)
+      await _auth.currentUser!.getIdToken(true);
+
+      return right(unit);
+    } on Exception catch (e) {
+      return left(ApiException.unAuthorized(e.toString()));
+    }
+  }
+
+  Future<Either<ApiException, Unit>> registerInstitutionWithCurrentUser(
+    RegisterInstitutionData data,
+  ) async {
+    try {
+      final callable =
+          _functions.httpsCallable('registerInstitutionWithCurrentUser');
+
+      final payload = {
+        'name': data.name,
+        'email': data.email,
+        'website': data.website,
+        'phoneNumber': data.phoneNumber,
+        'country': data.country!.name,
+        'province': data.province!.name,
+        'city': data.city!.name,
+        'address': data.address,
+        'postalCode': data.postalCode,
+        'organizationType': kGetOrganizationTypeName(data.organizationType!),
+        'organizationSize': data.organizationSize!.name,
+        'typeOfHelp': data.typeOfHelp!.map((e) => e.name).toList(),
+      };
+
+      final result = await callable.call(payload);
+
+      if (result.data['error'] != null) {
+        return left(ApiException.unAuthorized(result.data['error']));
+      }
+
+      // refresh auth token to get the latest claims (role)
+      await _auth.currentUser!.getIdToken(true);
+
+      return right(unit);
     } on Exception catch (e) {
       return left(ApiException.unAuthorized(e.toString()));
     }

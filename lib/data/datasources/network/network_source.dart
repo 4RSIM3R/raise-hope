@@ -3,6 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -72,4 +73,11 @@ abstract class ApiService {
 
   @lazySingleton
   FirebaseFunctions get cloudFunctions => FirebaseFunctions.instance;
+
+  @lazySingleton
+  GoogleSignIn get googleSignIn => GoogleSignIn(
+        clientId:
+            // using web client id to get idToken
+            '834108486797-c0neuq5467sfb604cfoanrkhe1d8p15c.apps.googleusercontent.com',
+      );
 }

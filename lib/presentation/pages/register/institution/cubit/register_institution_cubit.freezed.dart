@@ -566,7 +566,9 @@ mixin _$RegisterInstitutionData {
   String? get postalCode => throw _privateConstructorUsedError;
   OrganizationType? get organizationType => throw _privateConstructorUsedError;
   OrganizationSize? get organizationSize => throw _privateConstructorUsedError;
-  List<TypeOfHelp>? get typeOfHelp => throw _privateConstructorUsedError;
+  List<TypeOfHelp>? get typeOfHelp =>
+      throw _privateConstructorUsedError; // register with current user (from google, etc)
+  bool get isUsingCurrentUser => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RegisterInstitutionDataCopyWith<RegisterInstitutionData> get copyWith =>
@@ -592,7 +594,8 @@ abstract class $RegisterInstitutionDataCopyWith<$Res> {
       String? postalCode,
       OrganizationType? organizationType,
       OrganizationSize? organizationSize,
-      List<TypeOfHelp>? typeOfHelp});
+      List<TypeOfHelp>? typeOfHelp,
+      bool isUsingCurrentUser});
 
   $CountryCopyWith<$Res>? get country;
   $ProvinceCopyWith<$Res>? get province;
@@ -626,6 +629,7 @@ class _$RegisterInstitutionDataCopyWithImpl<$Res,
     Object? organizationType = freezed,
     Object? organizationSize = freezed,
     Object? typeOfHelp = freezed,
+    Object? isUsingCurrentUser = null,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -680,6 +684,10 @@ class _$RegisterInstitutionDataCopyWithImpl<$Res,
           ? _value.typeOfHelp
           : typeOfHelp // ignore: cast_nullable_to_non_nullable
               as List<TypeOfHelp>?,
+      isUsingCurrentUser: null == isUsingCurrentUser
+          ? _value.isUsingCurrentUser
+          : isUsingCurrentUser // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -741,7 +749,8 @@ abstract class _$$_RegisterInstitutionDataCopyWith<$Res>
       String? postalCode,
       OrganizationType? organizationType,
       OrganizationSize? organizationSize,
-      List<TypeOfHelp>? typeOfHelp});
+      List<TypeOfHelp>? typeOfHelp,
+      bool isUsingCurrentUser});
 
   @override
   $CountryCopyWith<$Res>? get country;
@@ -776,6 +785,7 @@ class __$$_RegisterInstitutionDataCopyWithImpl<$Res>
     Object? organizationType = freezed,
     Object? organizationSize = freezed,
     Object? typeOfHelp = freezed,
+    Object? isUsingCurrentUser = null,
   }) {
     return _then(_$_RegisterInstitutionData(
       name: freezed == name
@@ -830,6 +840,10 @@ class __$$_RegisterInstitutionDataCopyWithImpl<$Res>
           ? _value._typeOfHelp
           : typeOfHelp // ignore: cast_nullable_to_non_nullable
               as List<TypeOfHelp>?,
+      isUsingCurrentUser: null == isUsingCurrentUser
+          ? _value.isUsingCurrentUser
+          : isUsingCurrentUser // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -850,7 +864,8 @@ class _$_RegisterInstitutionData implements _RegisterInstitutionData {
       this.postalCode,
       this.organizationType,
       this.organizationSize,
-      final List<TypeOfHelp>? typeOfHelp})
+      final List<TypeOfHelp>? typeOfHelp,
+      this.isUsingCurrentUser = false})
       : _typeOfHelp = typeOfHelp;
 
   @override
@@ -887,9 +902,14 @@ class _$_RegisterInstitutionData implements _RegisterInstitutionData {
     return EqualUnmodifiableListView(value);
   }
 
+// register with current user (from google, etc)
+  @override
+  @JsonKey()
+  final bool isUsingCurrentUser;
+
   @override
   String toString() {
-    return 'RegisterInstitutionData(name: $name, email: $email, website: $website, phoneNumber: $phoneNumber, password: $password, country: $country, province: $province, city: $city, address: $address, postalCode: $postalCode, organizationType: $organizationType, organizationSize: $organizationSize, typeOfHelp: $typeOfHelp)';
+    return 'RegisterInstitutionData(name: $name, email: $email, website: $website, phoneNumber: $phoneNumber, password: $password, country: $country, province: $province, city: $city, address: $address, postalCode: $postalCode, organizationType: $organizationType, organizationSize: $organizationSize, typeOfHelp: $typeOfHelp, isUsingCurrentUser: $isUsingCurrentUser)';
   }
 
   @override
@@ -916,7 +936,9 @@ class _$_RegisterInstitutionData implements _RegisterInstitutionData {
             (identical(other.organizationSize, organizationSize) ||
                 other.organizationSize == organizationSize) &&
             const DeepCollectionEquality()
-                .equals(other._typeOfHelp, _typeOfHelp));
+                .equals(other._typeOfHelp, _typeOfHelp) &&
+            (identical(other.isUsingCurrentUser, isUsingCurrentUser) ||
+                other.isUsingCurrentUser == isUsingCurrentUser));
   }
 
   @override
@@ -934,7 +956,8 @@ class _$_RegisterInstitutionData implements _RegisterInstitutionData {
       postalCode,
       organizationType,
       organizationSize,
-      const DeepCollectionEquality().hash(_typeOfHelp));
+      const DeepCollectionEquality().hash(_typeOfHelp),
+      isUsingCurrentUser);
 
   @JsonKey(ignore: true)
   @override
@@ -959,7 +982,8 @@ abstract class _RegisterInstitutionData implements RegisterInstitutionData {
       final String? postalCode,
       final OrganizationType? organizationType,
       final OrganizationSize? organizationSize,
-      final List<TypeOfHelp>? typeOfHelp}) = _$_RegisterInstitutionData;
+      final List<TypeOfHelp>? typeOfHelp,
+      final bool isUsingCurrentUser}) = _$_RegisterInstitutionData;
 
   @override
   String? get name;
@@ -987,6 +1011,8 @@ abstract class _RegisterInstitutionData implements RegisterInstitutionData {
   OrganizationSize? get organizationSize;
   @override
   List<TypeOfHelp>? get typeOfHelp;
+  @override // register with current user (from google, etc)
+  bool get isUsingCurrentUser;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterInstitutionDataCopyWith<_$_RegisterInstitutionData>

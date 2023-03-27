@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:next_starter/common/enums/organization_size.dart';
@@ -16,14 +17,28 @@ part 'register_institution_state.dart';
 @injectable
 class RegisterInstitutionCubit extends Cubit<RegisterInstitutionState> {
   final AuthRepository _authRepository;
+  final FirebaseAuth _firebaseAuth;
 
   RegisterInstitutionCubit(
     this._authRepository,
+    this._firebaseAuth,
   ) : super(
           const RegisterInstitutionState.personalData(
             RegisterInstitutionData(),
           ),
         );
+
+  void initializeWithCurrentUser() {
+    final account = _firebaseAuth.currentUser;
+
+    final newData = state.data.copyWith(
+      name: account?.displayName,
+      email: account?.email,
+      isUsingCurrentUser: true,
+    );
+
+    emit(state.copyWith(data: newData));
+  }
 
   void updatePersonalData({
     String? name,
@@ -103,7 +118,9 @@ class RegisterInstitutionCubit extends Cubit<RegisterInstitutionState> {
   }
 
   Future<ApiException?> _submit(RegisterInstitutionData data) async {
-    final response = await _authRepository.registerInstitution(data);
+    final response = data.isUsingCurrentUser
+        ? await _authRepository.registerInstitutionWithCurrentUser(data)
+        : await _authRepository.registerInstitution(data);
 
     return response.fold(
       (l) => l,

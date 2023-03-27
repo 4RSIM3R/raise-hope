@@ -31,7 +31,13 @@ class _SplashPageState extends State<SplashPage> {
       }
 
       final token = await auth.currentUser!.getIdTokenResult();
-      final role = token.claims!['role'] as String;
+      final role = token.claims?['role'] as String?;
+
+      if (role == null) {
+        auth.signOut().catchError((_) {});
+        router.replace(const OnboardingRoute());
+        return;
+      }
 
       debugPrint('role: $role');
 

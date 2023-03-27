@@ -48,6 +48,16 @@ class _RegisterVolunterPersonalDataStepState
     _form.control('phoneNumber').value = currentData.phoneNumber;
     _form.control('website').value = currentData.website;
     _form.control('password').value = currentData.password;
+
+    if (currentData.isUsingCurrentUser) {
+      _form.control('email').markAsDisabled();
+      _form.control('password').setValidators(
+        [],
+        autoValidate: true,
+      );
+
+      _form.markAsDirty();
+    }
   }
 
   @override
@@ -98,14 +108,19 @@ class _RegisterVolunterPersonalDataStepState
             ),
           ),
           33.verticalSpace,
-          ReactiveTextField(
-            formControlName: 'password',
-            textInputAction: TextInputAction.done,
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: true,
-            decoration: const InputDecoration(
-              labelText: 'Password',
-              hintText: 'Password',
+          BlocBuilder<RegisterInstitutionCubit, RegisterInstitutionState>(
+            builder: (_, state) => Visibility(
+              visible: !state.data.isUsingCurrentUser,
+              child: ReactiveTextField(
+                formControlName: 'password',
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  hintText: 'Password',
+                ),
+              ),
             ),
           ),
           43.verticalSpace,
