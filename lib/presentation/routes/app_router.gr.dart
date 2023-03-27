@@ -75,6 +75,18 @@ class _$AppRouter extends RootStackRouter {
         child: const KarmaMainPage(),
       );
     },
+    ProfileRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ProfilePage(),
+      );
+    },
+    ChatRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ChatPage(),
+      );
+    },
     HomeMainRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -90,7 +102,7 @@ class _$AppRouter extends RootStackRouter {
     HomeDiscussionRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const HomeDiscussionPage(),
+        child: const HeroEmptyRouterPage(),
       );
     },
     HomeDashboardRoute.name: (routeData) {
@@ -108,6 +120,12 @@ class _$AppRouter extends RootStackRouter {
           key: args.key,
           heroTag: args.heroTag,
         ),
+      );
+    },
+    ChatListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ChatListPage(),
       );
     },
   };
@@ -162,8 +180,15 @@ class _$AppRouter extends RootStackRouter {
             ),
             RouteConfig(
               HomeDiscussionRoute.name,
-              path: 'home-discussion-page',
+              path: 'hero-empty-router-page',
               parent: HomeRoute.name,
+              children: [
+                RouteConfig(
+                  ChatListRoute.name,
+                  path: '',
+                  parent: HomeDiscussionRoute.name,
+                )
+              ],
             ),
           ],
         ),
@@ -174,6 +199,14 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           KarmaMainRoute.name,
           path: '/karma-main-page',
+        ),
+        RouteConfig(
+          ProfileRoute.name,
+          path: '/profile-page',
+        ),
+        RouteConfig(
+          ChatRoute.name,
+          path: '/chat-page',
         ),
       ];
 }
@@ -321,6 +354,30 @@ class KarmaMainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ProfilePage]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute()
+      : super(
+          ProfileRoute.name,
+          path: '/profile-page',
+        );
+
+  static const String name = 'ProfileRoute';
+}
+
+/// generated route for
+/// [ChatPage]
+class ChatRoute extends PageRouteInfo<void> {
+  const ChatRoute()
+      : super(
+          ChatRoute.name,
+          path: '/chat-page',
+        );
+
+  static const String name = 'ChatRoute';
+}
+
+/// generated route for
 /// [HeroEmptyRouterPage]
 class HomeMainRoute extends PageRouteInfo<void> {
   const HomeMainRoute({List<PageRouteInfo>? children})
@@ -346,12 +403,13 @@ class HomeMissionRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [HomeDiscussionPage]
+/// [HeroEmptyRouterPage]
 class HomeDiscussionRoute extends PageRouteInfo<void> {
-  const HomeDiscussionRoute()
+  const HomeDiscussionRoute({List<PageRouteInfo>? children})
       : super(
           HomeDiscussionRoute.name,
-          path: 'home-discussion-page',
+          path: 'hero-empty-router-page',
+          initialChildren: children,
         );
 
   static const String name = 'HomeDiscussionRoute';
@@ -401,4 +459,16 @@ class MissionDetailRouteArgs {
   String toString() {
     return 'MissionDetailRouteArgs{key: $key, heroTag: $heroTag}';
   }
+}
+
+/// generated route for
+/// [ChatListPage]
+class ChatListRoute extends PageRouteInfo<void> {
+  const ChatListRoute()
+      : super(
+          ChatListRoute.name,
+          path: '',
+        );
+
+  static const String name = 'ChatListRoute';
 }

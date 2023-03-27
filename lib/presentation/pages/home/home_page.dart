@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:next_starter/common/extensions/extensions.dart';
-import 'package:next_starter/injection.dart';
 import 'package:next_starter/presentation/routes/app_router.dart';
+
+import 'components/app_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,6 +28,7 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           backgroundColor: Colors.white,
           key: _key,
+          drawer: const AppDrawer(),
           body: child[controller.activeIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: controller.activeIndex,
@@ -42,63 +42,6 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
-    );
-  }
-}
-
-class AppDrawer extends StatelessWidget {
-  const AppDrawer({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          StreamBuilder(
-            stream: locator<FirebaseAuth>().userChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return UserAccountsDrawerHeader(
-                  accountName: Text(
-                    snapshot.data?.displayName ?? "",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  accountEmail: Text(
-                    snapshot.data?.email ?? "",
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: snapshot.data?.photoURL != null
-                        ? Image.network(snapshot.data!.photoURL!)
-                        : const Icon(Icons.person),
-                  ),
-                );
-              } else {
-                return const Text("No user");
-              }
-            },
-          ),
-          // logout button
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text("Logout"),
-            iconColor: context.colorScheme.error.withOpacity(0.75),
-            textColor: context.colorScheme.error,
-            onTap: () {
-              locator<FirebaseAuth>().signOut();
-              context.router.replace(LoginRoute());
-            },
-          ),
-        ],
-      ),
     );
   }
 }
