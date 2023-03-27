@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +21,9 @@ Future<void> main() async {
     // adb reverse tcp:5001 tcp:5001
     // adb reverse tcp:9099 tcp:9099
     // adb reverse tcp:8080 tcp:8080
-    // FirebaseFunctions.instance.useFunctionsEmulator('0.0.0.0', 5001);
-    // FirebaseAuth.instance.useAuthEmulator('0.0.0.0', 9099);
-    // FirebaseFirestore.instance.useFirestoreEmulator('0.0.0.0', 8080);
+    FirebaseFunctions.instance.useFunctionsEmulator('0.0.0.0', 5001);
+    FirebaseAuth.instance.useAuthEmulator('0.0.0.0', 9099);
+    FirebaseFirestore.instance.useFirestoreEmulator('0.0.0.0', 8080);
   }
 
   await configureDependencies();

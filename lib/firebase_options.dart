@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,16 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBoiujL6m_V9YDyrMYS2MMC2nuZhzuQ-JA',
-    appId: '1:834108486797:web:84742bf1aa844599d29ec4',
-    messagingSenderId: '834108486797',
-    projectId: 'raise-hope',
-    authDomain: 'raise-hope.firebaseapp.com',
-    storageBucket: 'raise-hope.appspot.com',
-    measurementId: 'G-0NWYPBXG8R',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA-caWXay-kA_vkYhqcUPVto4FzEvbKIps',
     appId: '1:834108486797:android:dedb9eb7a2a14453d29ec4',
@@ -70,7 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '834108486797',
     projectId: 'raise-hope',
     storageBucket: 'raise-hope.appspot.com',
-    iosClientId: '834108486797-n3jq32r2lrooddlmm1rqnq9elb3tf0be.apps.googleusercontent.com',
+    androidClientId:
+        '834108486797-9pu50l6rsbgp9hhfn9qcqptku4thbncf.apps.googleusercontent.com',
+    iosClientId:
+        '834108486797-n3jq32r2lrooddlmm1rqnq9elb3tf0be.apps.googleusercontent.com',
     iosBundleId: 'com.example.examApp',
   );
 }

@@ -51,65 +51,87 @@ class _RegisterVolunterPersonalDataStepState
 
   @override
   Widget build(BuildContext context) {
-    return ReactiveForm(
-      formGroup: _form,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          6.verticalSpace, // to fix floating label clipping
-          ReactiveTextField(
-            formControlName: 'fullName',
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.name,
-            decoration: const InputDecoration(
-              labelText: 'Full Name',
-              hintText: 'Enter your full name',
+    return BlocListener<RegisterVolunteerCubit, RegisterVolunteerState>(
+      listener: (context, state) {
+        _form.control('fullName').value = state.data.fullName;
+        _form.control('email').value = state.data.email;
+        _form.control('phoneNumber').value = state.data.phoneNumber;
+        _form.control('address').value = state.data.address;
+        _form.control('password').value = state.data.password;
+
+        if (state.data.idToken != null) {
+          _form.control('email').markAsDisabled();
+          _form.control('password').setValidators(
+            [],
+            autoValidate: true,
+          );
+        }
+      },
+      child: ReactiveForm(
+        formGroup: _form,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            6.verticalSpace, // to fix floating label clipping
+            ReactiveTextField(
+              formControlName: 'fullName',
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.name,
+              decoration: const InputDecoration(
+                labelText: 'Full Name',
+                hintText: 'Enter your full name',
+              ),
             ),
-          ),
-          33.verticalSpace,
-          ReactiveTextField(
-            formControlName: 'email',
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              labelText: 'Email',
-              hintText: 'Enter your email address',
+            33.verticalSpace,
+            ReactiveTextField(
+              formControlName: 'email',
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                hintText: 'Enter your email address',
+              ),
             ),
-          ),
-          33.verticalSpace,
-          ReactiveTextField(
-            formControlName: 'phoneNumber',
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(
-              labelText: 'Phone Number',
-              hintText: 'Enter your phone number',
+            33.verticalSpace,
+            ReactiveTextField(
+              formControlName: 'phoneNumber',
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                labelText: 'Phone Number',
+                hintText: 'Enter your phone number',
+              ),
             ),
-          ),
-          33.verticalSpace,
-          ReactiveTextField(
-            formControlName: 'address',
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.streetAddress,
-            decoration: const InputDecoration(
-              labelText: 'Address',
-              hintText: 'Enter your address',
+            33.verticalSpace,
+            ReactiveTextField(
+              formControlName: 'address',
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.streetAddress,
+              decoration: const InputDecoration(
+                labelText: 'Address',
+                hintText: 'Enter your address',
+              ),
             ),
-          ),
-          33.verticalSpace,
-          ReactiveTextField(
-            formControlName: 'password',
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: true,
-            decoration: const InputDecoration(
-              labelText: 'Password',
-              hintText: 'Enter your password',
+            33.verticalSpace,
+            BlocBuilder<RegisterVolunteerCubit, RegisterVolunteerState>(
+              builder: (_, state) => Visibility(
+                visible: state.data.idToken == null,
+                child: ReactiveTextField(
+                  formControlName: 'password',
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    hintText: 'Enter your password',
+                  ),
+                ),
+              ),
             ),
-          ),
-          43.verticalSpace,
-          _buildButton(),
-        ],
+            43.verticalSpace,
+            _buildButton(),
+          ],
+        ),
       ),
     );
   }

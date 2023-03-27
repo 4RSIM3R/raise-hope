@@ -24,5 +24,8 @@ class RegisterVolunteerData with _$RegisterVolunteerData {
     List<int>? daysOfWeekAvailable,
     List<NameOfTimeDay>? preferedTime,
     List<String>? interest,
+
+    // google sign in
+    String? idToken,
   }) = _RegisterVolunteerData;
 }

@@ -1,6 +1,8 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
 import 'package:next_starter/injection.dart';
 import 'package:next_starter/presentation/routes/app_router.dart';
@@ -167,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: context.colorScheme.primary,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: _registerOrLoginWithGoogle,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -193,9 +195,9 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       final destination = widget.isInstitution
                           ? const RegisterInstitutionRoute()
-                          : const RegisterVolunteerRoute();
+                          : RegisterVolunteerRoute();
 
-                      locator<AppRouter>().push(destination);
+                      locator<AppRouter>().push(destination as PageRouteInfo);
                     },
                   ),
                 ],
@@ -240,5 +242,60 @@ class _LoginPageState extends State<LoginPage> {
     } finally {
       setState(() => _isLoading = false);
     }
+  }
+
+  Future<void> _registerOrLoginWithGoogle() async {
+    setState(() => _isLoading = true);
+    final auth = locator<FirebaseAuth>();
+    final router = locator<AppRouter>();
+    final googleSignIn = locator<GoogleSignIn>();
+
+    // try login with google first
+    try {
+      await googleSignIn.signOut();
+
+      final googleUser = await googleSignIn.signIn();
+      final googleAuth = await googleUser!.authentication;
+      final idToken = googleAuth.idToken;
+
+      final result = await auth.signInWithCredential(
+        GoogleAuthProvider.credential(
+          idToken: idToken,
+        ),
+      );
+
+      if (result.additionalUserInfo?.isNewUser == true) {
+        final validIdToken = await result.user?.getIdToken(true);
+        await result.user?.delete();
+
+        _registerUserWithGoogle(googleUser, validIdToken!);
+      } else {
+        router.replace(const HomeRoute());
+      }
+    } on FirebaseAuthException catch (e) {
+      context.showSnackbar(
+        title: 'Whoops!',
+        message: e.message ?? 'Something went wrong.',
+      );
+    } on Exception catch (e) {
+      context.showSnackbar(
+        title: 'Whoops!',
+        message: e.toString(),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _registerUserWithGoogle(
+      GoogleSignInAccount account, String validIdToken) async {
+    final destination = widget.isInstitution
+        ? const RegisterInstitutionRoute()
+        : RegisterVolunteerRoute(
+            googleAccount: account,
+            validIdToken: validIdToken,
+          );
+
+    locator<AppRouter>().push(destination as PageRouteInfo);
   }
 }

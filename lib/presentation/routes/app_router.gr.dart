@@ -30,9 +30,15 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     RegisterVolunteerRoute.name: (routeData) {
+      final args = routeData.argsAs<RegisterVolunteerRouteArgs>(
+          orElse: () => const RegisterVolunteerRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const RegisterVolunteerPage(),
+        child: RegisterVolunteerPage(
+          key: args.key,
+          googleAccount: args.googleAccount,
+          validIdToken: args.validIdToken,
+        ),
       );
     },
     RegisterInstitutionRoute.name: (routeData) {
@@ -237,14 +243,41 @@ class OnboardingRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [RegisterVolunteerPage]
-class RegisterVolunteerRoute extends PageRouteInfo<void> {
-  const RegisterVolunteerRoute()
-      : super(
+class RegisterVolunteerRoute extends PageRouteInfo<RegisterVolunteerRouteArgs> {
+  RegisterVolunteerRoute({
+    Key? key,
+    GoogleSignInAccount? googleAccount,
+    String? validIdToken,
+  }) : super(
           RegisterVolunteerRoute.name,
           path: '/register-volunteer-page',
+          args: RegisterVolunteerRouteArgs(
+            key: key,
+            googleAccount: googleAccount,
+            validIdToken: validIdToken,
+          ),
         );
 
   static const String name = 'RegisterVolunteerRoute';
+}
+
+class RegisterVolunteerRouteArgs {
+  const RegisterVolunteerRouteArgs({
+    this.key,
+    this.googleAccount,
+    this.validIdToken,
+  });
+
+  final Key? key;
+
+  final GoogleSignInAccount? googleAccount;
+
+  final String? validIdToken;
+
+  @override
+  String toString() {
+    return 'RegisterVolunteerRouteArgs{key: $key, googleAccount: $googleAccount, validIdToken: $validIdToken}';
+  }
 }
 
 /// generated route for

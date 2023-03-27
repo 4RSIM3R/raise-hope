@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:next_starter/common/enums/name_of_time_day.dart';
 import 'package:next_starter/common/errors/api_exception.dart';
@@ -12,8 +13,9 @@ part 'register_volunteer_state.dart';
 class RegisterVolunteerCubit extends Cubit<RegisterVolunteerState> {
   final AuthRepository _authRepository;
 
-  RegisterVolunteerCubit(this._authRepository)
-      : super(
+  RegisterVolunteerCubit(
+    this._authRepository,
+  ) : super(
           const RegisterVolunteerState.personalData(
             RegisterVolunteerData(),
           ),
@@ -32,6 +34,21 @@ class RegisterVolunteerCubit extends Cubit<RegisterVolunteerState> {
       phoneNumber: phoneNumber,
       address: address,
       password: password,
+    );
+
+    emit(state.copyWith(data: newData));
+  }
+
+  Future<void> initializeGoogleSignIn(
+    GoogleSignInAccount account,
+    String validIdToken,
+  ) async {
+    final token = validIdToken;
+
+    final newData = state.data.copyWith(
+      fullName: account.displayName,
+      email: account.email,
+      idToken: token,
     );
 
     emit(state.copyWith(data: newData));
@@ -83,7 +100,9 @@ class RegisterVolunteerCubit extends Cubit<RegisterVolunteerState> {
   }
 
   Future<ApiException?> _submit(RegisterVolunteerData data) async {
-    final response = await _authRepository.registerVolunteer(data);
+    final response = data.idToken != null
+        ? await _authRepository.registerVolunteerWithGoogle(data.idToken!, data)
+        : await _authRepository.registerVolunteer(data);
 
     return response.fold(
       (l) => l,

@@ -46,7 +46,6 @@ class AuthRepository {
         return left(const ApiException.unAuthorized('Invalid token'));
       }
     } on Exception catch (e) {
-      rethrow;
       return left(ApiException.unAuthorized(e.toString()));
     }
   }
@@ -89,6 +88,39 @@ class AuthRepository {
       }
     } on Exception catch (e) {
       return left(ApiException.unAuthorized(e.toString()));
+    }
+  }
+
+  Future<Either<ApiException, Unit>> registerVolunteerWithGoogle(
+    String idToken,
+    RegisterVolunteerData data,
+  ) async {
+    final callable = _functions.httpsCallable('registerVolunteerWithGoogle');
+
+    final payload = {
+      'name': data.fullName,
+      'email': data.email,
+      'phone': data.phoneNumber,
+      'address': data.address,
+      'availability': data.daysOfWeekAvailable!.toList(),
+      'preferedTime': data.preferedTime!.map((e) => e.name).toList(),
+      'interests': data.interest!.toList(),
+      'idToken': idToken,
+    };
+
+    final result = await callable.call(payload);
+
+    if (result.data['error'] != null) {
+      return left(ApiException.unAuthorized(result.data['error']));
+    }
+
+    final token = result.data['token'];
+
+    if (token != null) {
+      await _auth.signInWithCustomToken(token);
+      return right(unit);
+    } else {
+      return left(const ApiException.unAuthorized('Invalid token'));
     }
   }
 }
