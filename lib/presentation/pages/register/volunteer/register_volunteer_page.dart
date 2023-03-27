@@ -2,7 +2,6 @@ import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
 import 'package:next_starter/injection.dart';
 import 'package:next_starter/presentation/pages/register/components/custom_stepper.dart';
@@ -13,14 +12,12 @@ import 'package:next_starter/presentation/pages/register/volunteer/steps/registe
 import 'cubit/register_volunteer_cubit.dart';
 
 class RegisterVolunteerPage extends StatefulWidget {
-  final GoogleSignInAccount? googleAccount;
-  final String? validIdToken;
+  final bool isUsingCurrentUser;
 
   const RegisterVolunteerPage({
     super.key,
-    this.googleAccount,
-    this.validIdToken,
-  }) : assert(googleAccount == null || validIdToken != null);
+    this.isUsingCurrentUser = false,
+  });
 
   @override
   State<RegisterVolunteerPage> createState() => _RegisterVolunteerPageState();
@@ -58,11 +55,8 @@ class _RegisterVolunteerPageState extends State<RegisterVolunteerPage> {
         create: (context) {
           final cubit = locator<RegisterVolunteerCubit>();
 
-          if (widget.googleAccount != null) {
-            cubit.initializeGoogleSignIn(
-              widget.googleAccount!,
-              widget.validIdToken!,
-            );
+          if (widget.isUsingCurrentUser) {
+            cubit.initializeWithCurrentUser();
           }
 
           return cubit;

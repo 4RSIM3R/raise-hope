@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:adaptive_sizer/adaptive_sizer.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:next_starter/common/enums/type_of_help.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
+import 'package:next_starter/injection.dart';
 import 'package:next_starter/presentation/components/card/custom_card.dart';
 import 'package:next_starter/presentation/components/card/karma_card.dart';
 import 'package:next_starter/presentation/components/card/mission_card.dart';
@@ -54,7 +54,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
             child: MissionCard(
               heroTag: 'mission_${index}_${Random().nextInt(10000)}',
               onTap: (tag) {
-                context.pushRoute(
+                locator<AppRouter>().push(
                   MissionDetailRoute(
                     heroTag: tag,
                   ),
@@ -183,10 +183,13 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
   }
 
   Widget _buildKarmaProgress() {
-    return const SliverPadding(
-      padding: EdgeInsets.all(16),
+    return SliverPadding(
+      padding: const EdgeInsets.all(16),
       sliver: SliverToBoxAdapter(
-        child: KarmaCard(),
+        child: GestureDetector(
+          child: const KarmaCard(),
+          onTap: () => locator<AppRouter>().push(const KarmaMainRoute()),
+        ),
       ),
     );
   }

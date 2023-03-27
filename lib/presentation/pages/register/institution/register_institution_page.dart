@@ -13,7 +13,12 @@ import 'package:next_starter/presentation/pages/register/institution/steps/regis
 import 'package:next_starter/presentation/theme/color_schemes.dart';
 
 class RegisterInstitutionPage extends StatefulWidget {
-  const RegisterInstitutionPage({super.key});
+  final bool isUsingCurrentUser;
+
+  const RegisterInstitutionPage({
+    super.key,
+    this.isUsingCurrentUser = false,
+  });
 
   @override
   State<RegisterInstitutionPage> createState() =>
@@ -56,7 +61,15 @@ class _RegisterInstitutionPageState extends State<RegisterInstitutionPage> {
       ),
       child: Scaffold(
         body: BlocProvider(
-          create: (context) => locator<RegisterInstitutionCubit>(),
+          create: (context) {
+            final cubit = locator<RegisterInstitutionCubit>();
+
+            if (widget.isUsingCurrentUser) {
+              cubit.initializeWithCurrentUser();
+            }
+
+            return cubit;
+          },
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [

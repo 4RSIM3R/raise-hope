@@ -29,5 +29,8 @@ class RegisterInstitutionData with _$RegisterInstitutionData {
     OrganizationType? organizationType,
     OrganizationSize? organizationSize,
     List<TypeOfHelp>? typeOfHelp,
+
+    // register with current user (from google, etc)
+    @Default(false) bool isUsingCurrentUser,
   }) = _RegisterInstitutionData;
 }

@@ -36,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isPasswordVisible = false;
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +171,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: _registerOrLoginWithGoogle,
-                  child: Row(
+                  child: _isGoogleLoading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: context.colorScheme.onPrimary,
+                          ),
+                        )
+                      : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
@@ -194,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text("Register Now"),
                     onPressed: () {
                       final destination = widget.isInstitution
-                          ? const RegisterInstitutionRoute()
+                          ? RegisterInstitutionRoute()
                           : RegisterVolunteerRoute();
 
                       locator<AppRouter>().push(destination as PageRouteInfo);
@@ -245,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _registerOrLoginWithGoogle() async {
-    setState(() => _isLoading = true);
+    setState(() => _isGoogleLoading = true);
     final auth = locator<FirebaseAuth>();
     final router = locator<AppRouter>();
     final googleSignIn = locator<GoogleSignIn>();
@@ -264,11 +274,12 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
 
-      if (result.additionalUserInfo?.isNewUser == true) {
-        final validIdToken = await result.user?.getIdToken(true);
-        await result.user?.delete();
+      // role itu diset di endpoint registrasi, kalau gapunya berarti dia pernah cancel registrasi
+      final token = await result.user!.getIdTokenResult();
+      final role = token.claims?['role'] as String?;
 
-        _registerUserWithGoogle(googleUser, validIdToken!);
+      if (role == null || role.isEmpty) {
+        _registerWithCurrentUser();
       } else {
         router.replace(const HomeRoute());
       }
@@ -283,18 +294,14 @@ class _LoginPageState extends State<LoginPage> {
         message: e.toString(),
       );
     } finally {
-      setState(() => _isLoading = false);
+      setState(() => _isGoogleLoading = false);
     }
   }
 
-  Future<void> _registerUserWithGoogle(
-      GoogleSignInAccount account, String validIdToken) async {
+  Future<void> _registerWithCurrentUser() async {
     final destination = widget.isInstitution
-        ? const RegisterInstitutionRoute()
-        : RegisterVolunteerRoute(
-            googleAccount: account,
-            validIdToken: validIdToken,
-          );
+        ? RegisterInstitutionRoute(isUsingCurrentUser: true)
+        : RegisterVolunteerRoute(isUsingCurrentUser: true);
 
     locator<AppRouter>().push(destination as PageRouteInfo);
   }

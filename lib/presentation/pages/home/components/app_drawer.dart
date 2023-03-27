@@ -1,4 +1,5 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +43,22 @@ class AppDrawer extends StatelessWidget {
                     if (snapshot.hasData) {
                       return Row(
                         children: [
+                          if (snapshot.data?.photoURL != null)
+                            Hero(
+                              tag: 'profile-picture',
+                              child: CircleAvatar(
+                                radius: 24,
+                                backgroundImage: CachedNetworkImageProvider(
+                                  snapshot.data!.photoURL!,
+                                ),
+                              ),
+                            )
+                          else 
                           CircleAvatar(
                             radius: 24,
-                            backgroundColor: Colors.white,
-                            child: snapshot.data?.photoURL != null
-                                ? Image.network(snapshot.data!.photoURL!)
-                                : const Icon(Icons.person),
-                          ),
+                              backgroundColor: context.colorScheme.background,
+                              child: const Icon(Icons.person),
+                            ),
                           20.horizontalSpace,
                           Expanded(
                             child: Column(
@@ -110,7 +120,7 @@ class AppDrawer extends StatelessWidget {
                       icon: CommunityMaterialIcons.logout,
                       onTap: () async {
                         locator<FirebaseAuth>().signOut();
-                        locator<AppRouter>().replace(LoginRoute());
+                        locator<AppRouter>().replace(const OnboardingRoute());
                       },
                     ),
                     12.verticalSpace,

@@ -36,15 +36,19 @@ class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: RegisterVolunteerPage(
           key: args.key,
-          googleAccount: args.googleAccount,
-          validIdToken: args.validIdToken,
+          isUsingCurrentUser: args.isUsingCurrentUser,
         ),
       );
     },
     RegisterInstitutionRoute.name: (routeData) {
+      final args = routeData.argsAs<RegisterInstitutionRouteArgs>(
+          orElse: () => const RegisterInstitutionRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const RegisterInstitutionPage(),
+        child: RegisterInstitutionPage(
+          key: args.key,
+          isUsingCurrentUser: args.isUsingCurrentUser,
+        ),
       );
     },
     RegisterCongratulationRoute.name: (routeData) {
@@ -246,15 +250,13 @@ class OnboardingRoute extends PageRouteInfo<void> {
 class RegisterVolunteerRoute extends PageRouteInfo<RegisterVolunteerRouteArgs> {
   RegisterVolunteerRoute({
     Key? key,
-    GoogleSignInAccount? googleAccount,
-    String? validIdToken,
+    bool isUsingCurrentUser = false,
   }) : super(
           RegisterVolunteerRoute.name,
           path: '/register-volunteer-page',
           args: RegisterVolunteerRouteArgs(
             key: key,
-            googleAccount: googleAccount,
-            validIdToken: validIdToken,
+            isUsingCurrentUser: isUsingCurrentUser,
           ),
         );
 
@@ -264,32 +266,52 @@ class RegisterVolunteerRoute extends PageRouteInfo<RegisterVolunteerRouteArgs> {
 class RegisterVolunteerRouteArgs {
   const RegisterVolunteerRouteArgs({
     this.key,
-    this.googleAccount,
-    this.validIdToken,
+    this.isUsingCurrentUser = false,
   });
 
   final Key? key;
 
-  final GoogleSignInAccount? googleAccount;
-
-  final String? validIdToken;
+  final bool isUsingCurrentUser;
 
   @override
   String toString() {
-    return 'RegisterVolunteerRouteArgs{key: $key, googleAccount: $googleAccount, validIdToken: $validIdToken}';
+    return 'RegisterVolunteerRouteArgs{key: $key, isUsingCurrentUser: $isUsingCurrentUser}';
   }
 }
 
 /// generated route for
 /// [RegisterInstitutionPage]
-class RegisterInstitutionRoute extends PageRouteInfo<void> {
-  const RegisterInstitutionRoute()
-      : super(
+class RegisterInstitutionRoute
+    extends PageRouteInfo<RegisterInstitutionRouteArgs> {
+  RegisterInstitutionRoute({
+    Key? key,
+    bool isUsingCurrentUser = false,
+  }) : super(
           RegisterInstitutionRoute.name,
           path: '/register-institution-page',
+          args: RegisterInstitutionRouteArgs(
+            key: key,
+            isUsingCurrentUser: isUsingCurrentUser,
+          ),
         );
 
   static const String name = 'RegisterInstitutionRoute';
+}
+
+class RegisterInstitutionRouteArgs {
+  const RegisterInstitutionRouteArgs({
+    this.key,
+    this.isUsingCurrentUser = false,
+  });
+
+  final Key? key;
+
+  final bool isUsingCurrentUser;
+
+  @override
+  String toString() {
+    return 'RegisterInstitutionRouteArgs{key: $key, isUsingCurrentUser: $isUsingCurrentUser}';
+  }
 }
 
 /// generated route for

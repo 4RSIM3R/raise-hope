@@ -25,7 +25,7 @@ class RegisterVolunteerData with _$RegisterVolunteerData {
     List<NameOfTimeDay>? preferedTime,
     List<String>? interest,
 
-    // google sign in
-    String? idToken,
+    // register with current user (from google, etc)
+    @Default(false) bool isUsingCurrentUser,
   }) = _RegisterVolunteerData;
 }

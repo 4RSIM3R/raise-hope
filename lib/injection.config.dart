@@ -63,10 +63,14 @@ _i1.GetIt $initGetIt(
         gh<_i5.FirebaseAuth>(),
         gh<_i7.FirebaseFunctions>(),
       ));
-  gh.factory<_i15.RegisterInstitutionCubit>(
-      () => _i15.RegisterInstitutionCubit(gh<_i14.AuthRepository>()));
-  gh.factory<_i16.RegisterVolunteerCubit>(
-      () => _i16.RegisterVolunteerCubit(gh<_i14.AuthRepository>()));
+  gh.factory<_i15.RegisterInstitutionCubit>(() => _i15.RegisterInstitutionCubit(
+        gh<_i14.AuthRepository>(),
+        gh<_i5.FirebaseAuth>(),
+      ));
+  gh.factory<_i16.RegisterVolunteerCubit>(() => _i16.RegisterVolunteerCubit(
+        gh<_i14.AuthRepository>(),
+        gh<_i5.FirebaseAuth>(),
+      ));
   return getIt;
 }
 

@@ -1,4 +1,5 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:next_starter/common/extensions/extensions.dart';
@@ -27,13 +28,22 @@ class ProfilePage extends StatelessWidget {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      radius: 76 / 2,
-                      backgroundColor: context.colorScheme.surfaceVariant,
-                      child: snapshot.data?.photoURL != null
-                          ? Image.network(snapshot.data!.photoURL!)
-                          : const Icon(Icons.person),
-                    ),
+                    if (snapshot.data?.photoURL != null)
+                      Hero(
+                        tag: 'profile-picture',
+                        child: CircleAvatar(
+                          radius: 76 / 2,
+                          backgroundImage: CachedNetworkImageProvider(
+                            snapshot.data!.photoURL!,
+                          ),
+                        ),
+                      )
+                    else
+                      CircleAvatar(
+                        radius: 76 / 2,
+                        backgroundColor: context.colorScheme.background,
+                        child: const Icon(Icons.person),
+                      ),
                     20.horizontalSpace,
                     Expanded(
                       child: Column(
