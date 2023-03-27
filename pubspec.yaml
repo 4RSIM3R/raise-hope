@@ -112,10 +112,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icon/
-    - assets/images/
-    - assets/images/onboarding/
-    - assets/json/
+  - assets/icon/
+  - assets/images/
+  - assets/images/onboarding/
+  - assets/json/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -143,7 +143,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 icons_launcher:
-  image_path: "assets/images/launcher.png"
+  image_path: "assets/images/logo.png"
   platforms:
     android:
       enable: true
