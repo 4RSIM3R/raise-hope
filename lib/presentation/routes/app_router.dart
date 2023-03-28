@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:next_starter/presentation/layouts/home/home_main_page.dart';
 import 'package:next_starter/presentation/layouts/home/home_mission_page.dart';

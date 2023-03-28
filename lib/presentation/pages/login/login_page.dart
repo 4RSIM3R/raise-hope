@@ -177,22 +177,22 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: context.colorScheme.onPrimary,
+                            color: context.colorScheme.primary,
                           ),
                         )
                       : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/icon/google_icon.png',
-                        width: 18,
-                        height: 18,
-                        fit: BoxFit.contain,
-                      ),
-                      8.horizontalSpace,
-                      const Text("Login with Google"),
-                    ],
-                  ),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/icon/google_icon.png',
+                              width: 18,
+                              height: 18,
+                              fit: BoxFit.contain,
+                            ),
+                            8.horizontalSpace,
+                            const Text("Login with Google"),
+                          ],
+                        ),
                 ),
               ),
               42.verticalSpace,
