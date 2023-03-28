@@ -74,6 +74,9 @@ dependencies:
   flutter_svg: ^2.0.4
   entry: ^0.0.8+1
   google_sign_in: ^6.0.2
+  firebase_analytics: ^10.1.6
+  firebase_crashlytics: ^3.0.17
+  firebase_performance: ^0.9.0+16
 
 dev_dependencies:
   flutter_test:

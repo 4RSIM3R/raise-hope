@@ -63,10 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '834108486797',
     projectId: 'raise-hope',
     storageBucket: 'raise-hope.appspot.com',
-    androidClientId:
-        '834108486797-9pu50l6rsbgp9hhfn9qcqptku4thbncf.apps.googleusercontent.com',
-    iosClientId:
-        '834108486797-n3jq32r2lrooddlmm1rqnq9elb3tf0be.apps.googleusercontent.com',
+    androidClientId: '834108486797-4k3dvbo0b49f5ot8njatnu01uv2mc6hi.apps.googleusercontent.com',
+    iosClientId: '834108486797-n3jq32r2lrooddlmm1rqnq9elb3tf0be.apps.googleusercontent.com',
     iosBundleId: 'com.example.examApp',
   );
 }
