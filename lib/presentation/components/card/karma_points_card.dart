@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:next_starter/presentation/theme/theme.dart';
 
 class KarmaPointsCard extends StatefulWidget {
-  const KarmaPointsCard({super.key});
+  const KarmaPointsCard({super.key, required this.title, required this.level});
+
+  final String title;
+  final int level;
 
   @override
   State<KarmaPointsCard> createState() => _KarmaCardState();
@@ -48,8 +51,7 @@ class _KarmaCardState extends State<KarmaPointsCard> {
                   width: 55,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                          "https://cdn-icons-png.flaticon.com/512/4752/4752781.png"),
+                      image: CachedNetworkImageProvider("https://cdn-icons-png.flaticon.com/512/4752/4752781.png"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -60,11 +62,8 @@ class _KarmaCardState extends State<KarmaPointsCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Level 1 Barefoot",
-                          style: CustomTextTheme.paragraph3),
-                      Text("In Progress",
-                          style: CustomTextTheme.paragraph1
-                              .copyWith(color: Colors.grey)),
+                      Text("Level ${widget.level} ${widget.title}", style: CustomTextTheme.paragraph3),
+                      Text("In Progress", style: CustomTextTheme.paragraph1.copyWith(color: Colors.grey)),
                     ],
                   ),
                 ),
@@ -84,12 +83,8 @@ class _KarmaCardState extends State<KarmaPointsCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("2 Task",
-                    style: CustomTextTheme.paragraph1
-                        .copyWith(color: Colors.blue)),
-                Text("5",
-                    style: CustomTextTheme.paragraph1
-                        .copyWith(color: Colors.grey)),
+                Text("2 Task", style: CustomTextTheme.paragraph1.copyWith(color: Colors.blue)),
+                Text("5", style: CustomTextTheme.paragraph1.copyWith(color: Colors.grey)),
               ],
             ),
             12.verticalSpace,
@@ -98,13 +93,11 @@ class _KarmaCardState extends State<KarmaPointsCard> {
                     children: [
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        visualDensity:
-                            const VisualDensity(horizontal: 0, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                         title: Row(
                           children: [
                             const Text(" • ", style: TextStyle(fontSize: 24)),
-                            Text("Follow DD Instagram",
-                                style: CustomTextTheme.paragraph1),
+                            Text("Follow DD Instagram", style: CustomTextTheme.paragraph1),
                           ],
                         ),
                         trailing: Checkbox(
@@ -114,13 +107,11 @@ class _KarmaCardState extends State<KarmaPointsCard> {
                       ),
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        visualDensity:
-                            const VisualDensity(horizontal: 0, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                         title: Row(
                           children: [
                             const Text(" • ", style: TextStyle(fontSize: 24)),
-                            Text("Follow DD Instagram",
-                                style: CustomTextTheme.paragraph1),
+                            Text("Follow DD Instagram", style: CustomTextTheme.paragraph1),
                           ],
                         ),
                         trailing: Checkbox(
@@ -130,13 +121,11 @@ class _KarmaCardState extends State<KarmaPointsCard> {
                       ),
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        visualDensity:
-                            const VisualDensity(horizontal: 0, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                         title: Row(
                           children: [
                             const Text(" • ", style: TextStyle(fontSize: 24)),
-                            Text("Follow DD Instagram",
-                                style: CustomTextTheme.paragraph1),
+                            Text("Follow DD Instagram", style: CustomTextTheme.paragraph1),
                           ],
                         ),
                         trailing: Checkbox(
@@ -146,13 +135,11 @@ class _KarmaCardState extends State<KarmaPointsCard> {
                       ),
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        visualDensity:
-                            const VisualDensity(horizontal: 0, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                         title: Row(
                           children: [
                             const Text(" • ", style: TextStyle(fontSize: 24)),
-                            Text("Follow DD Instagram",
-                                style: CustomTextTheme.paragraph1),
+                            Text("Follow DD Instagram", style: CustomTextTheme.paragraph1),
                           ],
                         ),
                         trailing: Checkbox(
@@ -162,13 +149,11 @@ class _KarmaCardState extends State<KarmaPointsCard> {
                       ),
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        visualDensity:
-                            const VisualDensity(horizontal: 0, vertical: -4),
+                        visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                         title: Row(
                           children: [
                             const Text(" • ", style: TextStyle(fontSize: 24)),
-                            Text("Follow DD Instagram",
-                                style: CustomTextTheme.paragraph1),
+                            Text("Follow DD Instagram", style: CustomTextTheme.paragraph1),
                           ],
                         ),
                         trailing: Checkbox(
